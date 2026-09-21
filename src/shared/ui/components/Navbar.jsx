@@ -8,7 +8,7 @@ import {
 import { NavLink } from "react-router";
 import useNavbar from "../../hooks/useNavbar";
 
-const Navbar = ({ isDark = false, onToggleTheme = () => {} }) => {
+const Navbar = React.memo(({ isDark = false, onToggleTheme = () => {} }) => {
   const { NAV_ITEMS, handle, archetype } = useNavbar();
 
   return (
@@ -87,6 +87,6 @@ const Navbar = ({ isDark = false, onToggleTheme = () => {} }) => {
       </div>
     </header>
   );
-};
+});
 
 export default Navbar;
