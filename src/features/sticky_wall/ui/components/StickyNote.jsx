@@ -8,20 +8,17 @@ import {
   RiFileCopyLine,
   RiCheckLine,
 } from "@remixicon/react";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Editor from "@monaco-editor/react";
 import useStickyNote from "../../hooks/useStickyNote";
+import TricolourDisplayButtons from "../../../../shared/ui/components/TricolourDisplayButtons";
+import { StickyNotesContext } from "../../../../config/StickyNoteContext";
 
-const StickyNote = ({
-  note,
-  isFlipped,
-  toggleFlip,
-  onDelete,
-  onEdit,
-}) => {
-    const {handleCopy, copied} = useStickyNote(note)
+const StickyNote = ({ note, isFlipped }) => {
+  const { handleCopy, copied } = useStickyNote(note);
 
-
+  const { toggleFlip, onDelete, onEdit } =
+    useContext(StickyNotesContext);
   return (
     <div
       key={note.id}
@@ -110,20 +107,12 @@ const StickyNote = ({
         <div className="absolute inset-0 w-full h-full bg-inverse-surface text-inverse-on-surface p-space-md sm:p-space-lg flex flex-col justify-between border-2 border-on-surface shadow-[4px_4px_0px_#111116] [transform:rotateY(180deg)] [backface-visibility:hidden]">
           <div className="flex flex-col h-full justify-between">
             {/* Top Bar with pattern label, language pill & copy action */}
-            
 
             {/* Monaco Read-Only Code Window */}
             <div className="my-2 border-2 border-on-surface bg-[#121316] shadow-[3px_3px_0px_#111116] overflow-hidden flex-1 min-h-[200px] flex flex-col">
               {/* Terminal Window Header */}
               <div className="bg-[#1b1c22] px-3 py-1.5 border-b border-surface/20 flex items-center justify-between">
-                <div className="flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-[#ff5f56] inline-block border border-black/40" />
-                  <span className="w-2 h-2 rounded-full bg-[#ffbd2e] inline-block border border-black/40" />
-                  <span className="w-2 h-2 rounded-full bg-[#27c93f] inline-block border border-black/40" />
-                  <span className="font-code-md text-[10px] text-primary-container font-bold pl-1.5 uppercase">
-                    // CHEAT_SHEET.{note.language || "cpp"}
-                  </span>
-                </div>
+                <TricolourDisplayButtons />
 
                 <span className="font-code-md text-[9px] text-white/50 uppercase">
                   READ-ONLY
@@ -172,33 +161,33 @@ const StickyNote = ({
 
               {/* Same Edit button from front side */}
               <div className="flex gap-2">
-                  <button
-                    type="button"
-                    onClick={() => onEdit(note.id)}
-                    className="w-8 h-8 flex items-center justify-center bg-surface-container-lowest text-on-surface border border-on-surface shadow-[2px_2px_0px_#111116] hover:bg-primary-container hover:text-on-primary-fixed active:translate-x-[1px] active:translate-y-[1px] transition-all cursor-pointer"
-                    title="Edit Note"
-                    aria-label="Edit Note"
-                  >
-                    <RiEdit2Line className="w-4 h-4" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleCopy}
-                    className="flex items-center gap-1 bg-surface-container-lowest text-on-surface px-2 py-0.5 font-label-sm text-[10px] uppercase font-bold border border-on-surface shadow-[2px_2px_0px_#111116] hover:bg-primary-container hover:text-on-primary-fixed active:translate-x-[1px] active:translate-y-[1px] transition-all cursor-pointer"
-                    title="Copy code snippet"
-                  >
-                    {copied ? (
-                      <>
-                        <RiCheckLine className="w-3.5 h-3.5 text-primary stroke-[3]" />
-                        <span>COPIED</span>
-                      </>
-                    ) : (
-                      <>
-                        <RiFileCopyLine className="w-3.5 h-3.5" />
-                        <span>COPY</span>
-                      </>
-                    )}
-                  </button>
+                <button
+                  type="button"
+                  onClick={() => onEdit(note.id)}
+                  className="w-8 h-8 flex items-center justify-center bg-surface-container-lowest text-on-surface border border-on-surface shadow-[2px_2px_0px_#111116] hover:bg-primary-container hover:text-on-primary-fixed active:translate-x-[1px] active:translate-y-[1px] transition-all cursor-pointer"
+                  title="Edit Note"
+                  aria-label="Edit Note"
+                >
+                  <RiEdit2Line className="w-4 h-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={handleCopy}
+                  className="flex items-center gap-1 bg-surface-container-lowest text-on-surface px-2 py-0.5 font-label-sm text-[10px] uppercase font-bold border border-on-surface shadow-[2px_2px_0px_#111116] hover:bg-primary-container hover:text-on-primary-fixed active:translate-x-[1px] active:translate-y-[1px] transition-all cursor-pointer"
+                  title="Copy code snippet"
+                >
+                  {copied ? (
+                    <>
+                      <RiCheckLine className="w-3.5 h-3.5 text-primary stroke-[3]" />
+                      <span>COPIED</span>
+                    </>
+                  ) : (
+                    <>
+                      <RiFileCopyLine className="w-3.5 h-3.5" />
+                      <span>COPY</span>
+                    </>
+                  )}
+                </button>
               </div>
             </div>
           </div>
@@ -209,5 +198,3 @@ const StickyNote = ({
 };
 
 export default StickyNote;
-
-

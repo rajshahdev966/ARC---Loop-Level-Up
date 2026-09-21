@@ -1,9 +1,11 @@
 import { useForm } from "react-hook-form";
 import { nanoid } from "nanoid";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
+import { StickyNotesContext } from "../../../config/StickyNoteContext";
 
 
-const useNoteModal = (noteForEdit, setShowModal, setStickyNotes, setNoteForEdit, stickyNotes) => {
+const useNoteModal = () => {
+    const {noteForEdit, setShowModal, setStickyNotes, setNoteForEdit, stickyNotes} = useContext(StickyNotesContext)
   const {
     register,
     handleSubmit,

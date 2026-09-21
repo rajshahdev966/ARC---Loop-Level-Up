@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   RiCloseLine,
   RiPushpinFill,
@@ -13,14 +13,11 @@ import Editor from "@monaco-editor/react";
 import useNoteModal from "../../hooks/useNoteModal";
 import noteColors from "../../../../shared/constants/noteColors";
 import dsaLanguages from "../../../../shared/constants/dsaLanguages";
+import TricolourDisplayButtons from "../../../../shared/ui/components/TricolourDisplayButtons";
+import { StickyNotesContext } from "../../../../config/StickyNoteContext";
 
-const NoteModal = ({
-  setShowModal,
-  setStickyNotes,
-  stickyNotes,
-  noteForEdit,
-  setNoteForEdit,
-}) => {
+const NoteModal = ({}) => {
+  const { setShowModal } = useContext(StickyNotesContext);
   const {
     register,
     handleSubmit,
@@ -29,7 +26,7 @@ const NoteModal = ({
     selectedBg,
     selectedLanguage,
     noteSubmit,
-  } = useNoteModal(noteForEdit, setShowModal, setStickyNotes, setNoteForEdit, stickyNotes);
+  } = useNoteModal();
 
   return (
     <div
@@ -229,16 +226,7 @@ const NoteModal = ({
               <div className="border-2 border-on-surface bg-[#121316] text-[#e4e1e9] shadow-[3px_3px_0px_#111116] overflow-hidden">
                 {/* Terminal Window Header */}
                 <div className="bg-[#1b1c22] px-3 py-2 border-b-2 border-on-surface flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f56] inline-block border border-black/40" />
-                      <span className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e] inline-block border border-black/40" />
-                      <span className="w-2.5 h-2.5 rounded-full bg-[#27c93f] inline-block border border-black/40" />
-                    </div>
-                    <span className="font-code-md text-xs font-bold text-primary-container pl-2 tracking-wide uppercase">
-                      // SNIPPET.{selectedLanguage.toUpperCase()}
-                    </span>
-                  </div>
+                  <TricolourDisplayButtons />
 
                   <span className="font-code-md text-[10px] bg-[#282932] border border-white/20 px-2 py-0.5 text-white/80 uppercase">
                     {selectedLanguage}

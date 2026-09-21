@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import VisionBoard from './features/vission_board/ui/pages/VisionBoard';
 import GlowUpCarousel from './features/glow_up/ui/pages/GlowUpCarousel';
-import TerminalChat from './features/terminal_chat/ui/pages/TerminalChat';
 import StickyWall from './features/sticky_wall/ui/pages/StickyWall';
 import YourWrapped from './features/your_wrapped/ui/pages/YourWrapped';
 import LoginPage from './features/auth/ui/pages/LoginPage';

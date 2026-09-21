@@ -7,11 +7,10 @@ import ProblemCard from "../components/ProblemCard";
 import Footer from "../../../../shared/ui/components/Footer";
 import ArcModal from "../../../arc_modal/ui/pages/ArcModal";
 
-import { PROBLEMS } from "./data/visionBoardData";
-
 const VisionBoard = () => {
   const [isArcModalOpen, setIsArcModalOpen] = useState(false);
   const [selectedArc, setSelectedArc] = useState(null);
+  const [allProblems, setAllProblems] = useState(JSON.parse(localStorage.getItem("allProblems")) || [])
 
   const handleOpenNewArc = () => {
     setSelectedArc(null);
@@ -19,6 +18,7 @@ const VisionBoard = () => {
   };
 
   const handleOpenArc = (arc) => {
+    console.log("From handle",arc);  
     setSelectedArc(arc);
     setIsArcModalOpen(true);
   };
@@ -43,11 +43,11 @@ const VisionBoard = () => {
 
           <section className="w-full px-gutter lg:px-gutter-desktop py-space-md">
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-space-lg lg:gap-space-xl items-start">
-              {PROBLEMS.map((problem) => (
+              {allProblems?.map((problem) => (
                 <ProblemCard
                   key={problem.id}
                   problem={problem}
-                  onOpenArc={handleOpenArc}
+                  handleOpenArc={handleOpenArc}
                 />
               ))}
             </div>
@@ -58,6 +58,10 @@ const VisionBoard = () => {
       <Footer />
 
       <ArcModal
+        allProblems={allProblems}
+        setAllProblems={setAllProblems}
+        selectedArc={selectedArc}
+        setSelectedArc={setSelectedArc}
         isOpen={isArcModalOpen}
         onClose={handleCloseArcModal}
         arcData={selectedArc}

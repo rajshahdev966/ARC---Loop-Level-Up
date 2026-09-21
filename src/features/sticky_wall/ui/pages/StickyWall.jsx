@@ -1,29 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Navbar from "../../../../shared/ui/components/Navbar";
 import Footer from "../../../../shared/ui/components/Footer";
 import NoteModal from "../components/NoteModal";
 import ActionButtons from "../components/ActionButtons";
 import StickyWallHeader from "../components/StickyWallHeader";
 import StickyNote from "../components/StickyNote";
-import useStickyWall from "../../hooks/useStickyWall";
+import { StickyNotesContext } from "../../../../config/StickyNoteContext";
 
 const StickyWall = () => {
-  const {
-    filterType,
-    setFilterType,
-    flippedCards,
-    showModal,
-    setShowModal,
-    noteForEdit,
-    setNoteForEdit,
-    toggleFlip,
-    onDelete,
-    onEdit,
-    filteredNotes,
-    stickyNotes,
-    setStickyNotes
-  } = useStickyWall();
-
+  const { flippedCards, showModal, filteredNotes } = useContext(StickyNotesContext);
   return (
     <div className="min-h-screen bg-canvas-bg desk-grid text-on-surface font-body-md text-body-md selection:bg-primary-container selection:text-on-primary-fixed">
       {/* Top Header */}
@@ -39,11 +24,7 @@ const StickyWall = () => {
                 <StickyWallHeader />
 
                 {/* Action Buttons */}
-                <ActionButtons
-                  setShowModal={setShowModal}
-                  setFilterType={setFilterType}
-                  filterType={filterType}
-                />
+                <ActionButtons />
               </div>
             </div>
           </div>
@@ -52,29 +33,12 @@ const StickyWall = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-10 pt-space-sm items-start">
             {filteredNotes.map((note) => {
               const isFlipped = flippedCards[note.id];
-              return (
-                <StickyNote
-                  note={note}
-                  isFlipped={isFlipped}
-                  toggleFlip={toggleFlip}
-                  setShowModal={setShowModal}
-                  onDelete={onDelete}
-                  onEdit={onEdit}
-                />
-              );
+              return <StickyNote isFlipped={isFlipped} note={note}/>;
             })}
           </div>
 
           {/* New Note Modal */}
-          {showModal && (
-            <NoteModal
-              setShowModal={setShowModal}
-              setStickyNotes={setStickyNotes}
-              stickyNotes={stickyNotes}
-              noteForEdit={noteForEdit}
-              setNoteForEdit={setNoteForEdit}
-            />
-          )}
+          {showModal && <NoteModal />}
         </div>
       </main>
 
