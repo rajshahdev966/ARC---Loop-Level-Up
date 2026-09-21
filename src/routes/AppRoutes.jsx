@@ -7,6 +7,7 @@ import StickyWall from "../features/sticky_wall/ui/pages/StickyWall"
 import YourWrapped from "../features/your_wrapped/ui/pages/YourWrapped"
 import GlowUpCarousel from "../features/glow_up/ui/pages/GlowUpCarousel"
 import { StickyNotesContext, StickyNotesContextProvider } from "../config/StickyNoteContext"
+import { VisionBoardContextProvider } from "../config/VisionBoardContext"
 
 const router = createBrowserRouter([
     {
@@ -25,7 +26,9 @@ const router = createBrowserRouter([
         children: [
             {
                 path: '',
-                element: <VisionBoard />
+                element: <VisionBoardContextProvider>
+                    <VisionBoard />
+                </VisionBoardContextProvider>
             },
             {
                 path: 'sticky',

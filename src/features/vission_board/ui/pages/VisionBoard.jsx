@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { act, useMemo, useState } from "react";
 
 import Navbar from "../../../../shared/ui/components/Navbar";
 
@@ -10,7 +10,24 @@ import ArcModal from "../../../arc_modal/ui/pages/ArcModal";
 const VisionBoard = () => {
   const [isArcModalOpen, setIsArcModalOpen] = useState(false);
   const [selectedArc, setSelectedArc] = useState(null);
-  const [allProblems, setAllProblems] = useState(JSON.parse(localStorage.getItem("allProblems")) || [])
+  const [allProblems, setAllProblems] = useState(
+    JSON.parse(localStorage.getItem("allProblems")) || [],
+  );
+  const [activeStatus, setActiveStatus] = useState("ALL");
+  const [activeTopic, setActiveTopic] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredProblems = useMemo(() => {
+    return allProblems.filter((problem)=>{
+      let statusMatch = activeStatus === "ALL" || activeStatus === problem.status
+      let topicMatch = activeTopic.length === 0 || problem.tags.includes(activeTopic)
+      let queryMatch = searchQuery.length === 0 || problem.title.includes(searchQuery)
+
+      return statusMatch && topicMatch && queryMatch
+    })
+  }, [searchQuery, activeStatus, activeTopic, allProblems]);
+
+
 
   const handleOpenNewArc = () => {
     setSelectedArc(null);
@@ -18,14 +35,14 @@ const VisionBoard = () => {
   };
 
   const handleOpenArc = (arc) => {
-    console.log("From handle",arc);  
+    console.log("From handle", arc);
     setSelectedArc(arc);
     setIsArcModalOpen(true);
   };
 
   const handleCloseArcModal = () => {
     setIsArcModalOpen(false);
-    setSelectedArc(null)
+    setSelectedArc(null);
   };
 
   const handleSaveArc = (savedArc) => {
@@ -38,12 +55,20 @@ const VisionBoard = () => {
 
       <main className="w-full pt-20 bg-transparent min-h-screen">
         <div className="flex flex-col w-full">
-
-          <FilterBoard onOpenNewArc={handleOpenNewArc} />
+          <FilterBoard
+            onOpenNewArc={handleOpenNewArc}
+            activeStatus={activeStatus}
+            setActiveStatus={setActiveStatus}
+            activeTopic={activeTopic}
+            setActiveTopic={setActiveTopic}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            allProblems={allProblems}
+          />
 
           <section className="w-full px-gutter lg:px-gutter-desktop py-space-md">
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-space-lg lg:gap-space-xl items-start">
-              {allProblems?.map((problem) => (
+              {filteredProblems?.map((problem) => (
                 <ProblemCard
                   key={problem.id}
                   problem={problem}
@@ -72,4 +97,3 @@ const VisionBoard = () => {
 };
 
 export default VisionBoard;
-

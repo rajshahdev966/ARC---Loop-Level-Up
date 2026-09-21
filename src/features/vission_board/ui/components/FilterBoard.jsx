@@ -1,30 +1,74 @@
-import React, { useState } from 'react';
-import { RiAddLine, RiSearchLine } from '@remixicon/react';
+import React, { useEffect, useState } from "react";
+import { RiAddLine, RiSearchLine } from "@remixicon/react";
+import availableTags from "../../../../shared/constants/availableTags";
 
-const FilterBoard = ({ onOpenNewArc = () => {} }) => {
-  const [activeStatus, setActiveStatus] = useState('ALL');
-  const [activeTopic, setActiveTopic] = useState('');
-  const [searchQuery, setSearchQuery] = useState('');
+const FilterBoard = ({
+  onOpenNewArc = () => {},
+  allProblems,
+  activeStatus,
+  setActiveStatus,
+  activeTopic,
+  setActiveTopic,
+  searchQuery,
+  setSearchQuery,
+}) => {
+
+ 
 
   const statusFilters = [
-    { id: 'ALL', label: 'ALL (48)', activeStyle: 'bg-primary-container text-on-primary-fixed' },
-    { id: 'VILLAIN', label: 'VILLAIN ERA (8) 💀', activeStyle: 'bg-error-container text-on-error-container' },
-    { id: 'MID', label: 'MID-ARC (14) ⚡', activeStyle: 'bg-secondary-container text-on-secondary-container' },
-    { id: 'FINAL', label: 'FINAL FORM (26) ✅', activeStyle: 'bg-primary-container text-on-primary-fixed' },
+    {
+      id: "ALL",
+      label: "ALL",
+      activeStyle: "bg-primary-container text-on-primary-fixed",
+    },
+    {
+      id: "VILLAIN",
+      label: "VILLAIN ERA💀",
+      activeStyle: "bg-error-container text-on-error-container",
+    },
+    {
+      id: "MID",
+      label: "MID-ARC⚡",
+      activeStyle: "bg-secondary-container text-on-secondary-container",
+    },
+    {
+      id: "FINAL",
+      label: "FINAL FORM✅",
+      activeStyle: "bg-primary-container text-on-primary-fixed",
+    },
   ];
 
   const topicFilters = [
-    { id: 'DP', label: '#DynamicProgramming', tilt: '-rotate-1', hoverBg: 'hover:bg-primary-fixed' },
-    { id: 'Graphs', label: '#Graphs', tilt: 'rotate-1', hoverBg: 'hover:bg-tertiary-container' },
-    { id: 'Trees', label: '#Trees', tilt: '-rotate-2', hoverBg: 'hover:bg-secondary-fixed' },
-    { id: 'SlidingWindow', label: '#SlidingWindow', tilt: 'rotate-2', hoverBg: 'hover:bg-primary-container' },
+    {
+      id: "DP",
+      label: "#DynamicProgramming",
+      tilt: "-rotate-1",
+      hoverBg: "hover:bg-primary-fixed",
+    },
+    {
+      id: "Graphs",
+      label: "#Graphs",
+      tilt: "rotate-1",
+      hoverBg: "hover:bg-tertiary-container",
+    },
+    {
+      id: "Trees",
+      label: "#Trees",
+      tilt: "-rotate-2",
+      hoverBg: "hover:bg-secondary-fixed",
+    },
+    {
+      id: "SlidingWindow",
+      label: "#SlidingWindow",
+      tilt: "rotate-2",
+      hoverBg: "hover:bg-primary-container",
+    },
   ];
 
   return (
     <section className="w-full px-gutter lg:px-gutter-desktop mt-space-sm mb-space-md">
       {/* Container with circular button on the left and Scrapboard panel */}
       <div className="relative flex flex-col md:flex-row items-center md:items-stretch">
-        
         {/* CIRCULAR "PIN ARC / NEW STORY" BUTTON (LAYERED ON TOP OF SCRAPBOARD) */}
         <div className="relative z-30 shrink-0 mb-3 md:mb-0 md:-mr-8 self-center group">
           <button
@@ -68,7 +112,7 @@ const FilterBoard = ({ onOpenNewArc = () => {} }) => {
                 </h2>
 
                 <span className="px-space-xs py-0.5 bg-surface-container-highest border border-on-surface font-label-sm text-[10px] uppercase font-bold text-on-surface -rotate-1 shadow-[1px_1px_0px_#111116]">
-                  48 Problems Cataloged
+                  {allProblems?.length} Problems Cataloged
                 </span>
               </div>
 
@@ -86,7 +130,7 @@ const FilterBoard = ({ onOpenNewArc = () => {} }) => {
                 {searchQuery ? (
                   <button
                     type="button"
-                    onClick={() => setSearchQuery('')}
+                    onClick={() => setSearchQuery("")}
                     className="absolute right-3 top-1/2 -translate-y-1/2 font-label-sm text-[10px] text-on-surface-variant hover:text-on-surface bg-surface-container border border-on-surface px-1 cursor-pointer"
                   >
                     CLEAR
@@ -113,7 +157,7 @@ const FilterBoard = ({ onOpenNewArc = () => {} }) => {
                       className={`px-space-sm py-1 border-2 border-on-surface font-label-md text-label-md uppercase font-bold shadow-[3px_3px_0px_#111116] active:translate-x-[2px] active:translate-y-[2px] transition-transform cursor-pointer ${
                         isActive
                           ? `${filter.activeStyle} -translate-y-0.5`
-                          : 'bg-surface-container-lowest hover:bg-surface-container text-on-surface'
+                          : "bg-surface-container-lowest hover:bg-surface-container text-on-surface"
                       }`}
                     >
                       {filter.label}
@@ -123,27 +167,25 @@ const FilterBoard = ({ onOpenNewArc = () => {} }) => {
               </div>
 
               {/* Topic Filter Chips */}
-              <div className="flex flex-wrap gap-1.5 items-center">
+              <div className="flex flex-wrap gap-1.5 items-center max-w-170">
                 <span className="font-label-sm text-[10px] uppercase font-bold text-on-surface-variant mr-1">
                   TOPICS:
                 </span>
 
-                {topicFilters.map((topic) => {
-                  const isSelected = activeTopic === topic.id;
+                {availableTags.map((topic) => {
+                  const isSelected = activeTopic === topic;
                   return (
                     <button
-                      key={topic.id}
+                      key={topic}
                       type="button"
-                      onClick={() => setActiveTopic(isSelected ? '' : topic.id)}
+                      onClick={() => setActiveTopic(isSelected ? "" : topic)}
                       className={`px-2 py-0.5 border border-on-surface font-code-md text-label-sm shadow-[2px_2px_0px_#111116] transition-transform hover:scale-105 cursor-pointer ${
-                        topic.tilt
-                      } ${
                         isSelected
-                          ? 'bg-primary-container text-on-primary-fixed font-bold'
+                          ? "bg-primary-container text-on-primary-fixed font-bold"
                           : `bg-surface-container-lowest ${topic.hoverBg} text-on-surface`
                       }`}
                     >
-                      {topic.label}
+                      {topic}
                     </button>
                   );
                 })}

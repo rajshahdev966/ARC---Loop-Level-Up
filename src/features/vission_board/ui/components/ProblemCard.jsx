@@ -45,10 +45,15 @@ const ProblemCard = ({ problem, handleOpenArc = () => {} }) => {
         </p>
       </div>
 
-      <div className="flex items-center justify-between mt-space-sm pt-2">
-        <span className="px-2 py-0.5 bg-surface-container border border-on-surface font-code-md text-[11px]">
-          {problem.tag}
-        </span>
+      <div className="flex flex-wrap gap-y-2 gap-x-1.5" >
+        {problem.tags.length &&
+          problem.tags.map((tags) => (
+            <div className="flex items-center justify-between">
+              <span className="px-2 py-0.5 bg-surface-container border border-on-surface font-code-md text-[11px]">
+                {tags}
+              </span>
+            </div>
+          ))}
       </div>
     </article>
   );
