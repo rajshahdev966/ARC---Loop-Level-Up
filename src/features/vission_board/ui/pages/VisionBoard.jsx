@@ -1,4 +1,4 @@
-import React, { act, useMemo, useState } from "react";
+import React, { act, useContext, useMemo, useState } from "react";
 
 import Navbar from "../../../../shared/ui/components/Navbar";
 
@@ -6,48 +6,10 @@ import FilterBoard from "../components/FilterBoard";
 import ProblemCard from "../components/ProblemCard";
 import Footer from "../../../../shared/ui/components/Footer";
 import ArcModal from "../../../arc_modal/ui/pages/ArcModal";
+import { VisionBoardContext } from "../../../../config/VisionBoardContext";
 
 const VisionBoard = () => {
-  const [isArcModalOpen, setIsArcModalOpen] = useState(false);
-  const [selectedArc, setSelectedArc] = useState(null);
-  const [allProblems, setAllProblems] = useState(
-    JSON.parse(localStorage.getItem("allProblems")) || [],
-  );
-  const [activeStatus, setActiveStatus] = useState("ALL");
-  const [activeTopic, setActiveTopic] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const filteredProblems = useMemo(() => {
-    return allProblems.filter((problem)=>{
-      let statusMatch = activeStatus === "ALL" || activeStatus === problem.status
-      let topicMatch = activeTopic.length === 0 || problem.tags.includes(activeTopic)
-      let queryMatch = searchQuery.length === 0 || problem.title.includes(searchQuery)
-
-      return statusMatch && topicMatch && queryMatch
-    })
-  }, [searchQuery, activeStatus, activeTopic, allProblems]);
-
-
-
-  const handleOpenNewArc = () => {
-    setSelectedArc(null);
-    setIsArcModalOpen(true);
-  };
-
-  const handleOpenArc = (arc) => {
-    console.log("From handle", arc);
-    setSelectedArc(arc);
-    setIsArcModalOpen(true);
-  };
-
-  const handleCloseArcModal = () => {
-    setIsArcModalOpen(false);
-    setSelectedArc(null);
-  };
-
-  const handleSaveArc = (savedArc) => {
-    console.log("Arc saved successfully:", savedArc);
-  };
+  const { filteredProblems } = useContext(VisionBoardContext);
 
   return (
     <div className="min-h-screen bg-canvas-bg desk-grid text-on-surface selection:bg-primary-container selection:text-on-primary-fixed">
@@ -55,25 +17,12 @@ const VisionBoard = () => {
 
       <main className="w-full pt-20 bg-transparent min-h-screen">
         <div className="flex flex-col w-full">
-          <FilterBoard
-            onOpenNewArc={handleOpenNewArc}
-            activeStatus={activeStatus}
-            setActiveStatus={setActiveStatus}
-            activeTopic={activeTopic}
-            setActiveTopic={setActiveTopic}
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            allProblems={allProblems}
-          />
+          <FilterBoard />
 
           <section className="w-full px-gutter lg:px-gutter-desktop py-space-md">
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-space-lg lg:gap-space-xl items-start">
               {filteredProblems?.map((problem) => (
-                <ProblemCard
-                  key={problem.id}
-                  problem={problem}
-                  handleOpenArc={handleOpenArc}
-                />
+                <ProblemCard key={problem.id} problem={problem} />
               ))}
             </div>
           </section>
@@ -82,16 +31,7 @@ const VisionBoard = () => {
 
       <Footer />
 
-      <ArcModal
-        allProblems={allProblems}
-        setAllProblems={setAllProblems}
-        selectedArc={selectedArc}
-        setSelectedArc={setSelectedArc}
-        isOpen={isArcModalOpen}
-        onClose={handleCloseArcModal}
-        arcData={selectedArc}
-        onSave={handleSaveArc}
-      />
+      <ArcModal />
     </div>
   );
 };

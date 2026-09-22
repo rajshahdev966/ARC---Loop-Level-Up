@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import tapeColors from "../../../../shared/constants/tapeColors";
+import { VisionBoardContext } from "../../../../config/VisionBoardContext";
 
-const ProblemCard = ({ problem, handleOpenArc = () => {} }) => {
+const ProblemCard = ({ problem}) => {
   const tapeObj =
     tapeColors.find((c) => c.id === problem.tapeColor) || tapeColors[0];
+
+  const {handleOpenArc} = useContext(VisionBoardContext)
+    
   return (
     <article
       onClick={() => handleOpenArc(problem)}
@@ -48,7 +52,7 @@ const ProblemCard = ({ problem, handleOpenArc = () => {} }) => {
       <div className="flex flex-wrap gap-y-2 gap-x-1.5" >
         {problem.tags.length &&
           problem.tags.map((tags) => (
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between" key={tags}>
               <span className="px-2 py-0.5 bg-surface-container border border-on-surface font-code-md text-[11px]">
                 {tags}
               </span>

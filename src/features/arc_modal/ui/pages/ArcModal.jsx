@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   RiCloseLine,
   RiPushpinFill,
@@ -11,9 +11,8 @@ import {
   RiDeleteBinLine,
   RiPriceTag3Line,
 } from "@remixicon/react";
-import { useForm, Controller, useFieldArray } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import Editor from "@monaco-editor/react";
-import { nanoid } from "nanoid";
 import dsaLanguages from "../../../../shared/constants/dsaLanguages";
 import availableTags from "../../../../shared/constants/availableTags";
 import TopPinBadge from "../components/TopPinBadge";
@@ -21,198 +20,46 @@ import ModalHeader from "../components/ModalHeader";
 import TricolourDisplayButton from "../../../../shared/ui/components/TricolourDisplayButtons";
 import tapeColors from "../../../../shared/constants/tapeColors";
 import ModalFooter from "../components/ModalFooter";
+import statusFilters from "../../../../shared/constants/statusFilters";
+import useArcModal from "../../hooks/useArcModal";
 
-const createApproach = (idx = 1) => {
-  const formattedNum = String(idx).padStart(2, "0");
-  return {
-    tabName:
-      idx === 1
-        ? "APPROACH 01 [BRUTE / VILLAIN]"
-        : `APPROACH ${formattedNum} [OPTIMIZED]`,
-    name:
-      idx === 1
-        ? "Approach 1: Brute Force Struggle (O(n²))"
-        : `Approach ${idx}: Optimized Strategy`,
-    language: "python",
-    code: `# Document your approach, time/space complexity & thought process\nclass Solution:\n    def solve(self):\n        pass`,
-  };
-};
-
-const ArcModal = ({
-  isOpen = false,
-  onClose = () => {},
-  allProblems,
-  setAllProblems,
-  selectedArc,
-  setSelectedArc,
-}) => {
-  const [activeApproachIdx, setActiveApproachIdx] = useState(0);
+const ArcModal = ({}) => {
   const {
-    register,
+    handleCloseArcModal,
     handleSubmit,
+    onFormSubmit,
+    register,
+    errors,
+    watchedTapeText,
+    watchedTapeColor,
+    approaches,
+    activeApproachIdx,
+    watchedApproaches,
+    handleAddApproach,
+    currentApproach,
+    isArcModalOpen,
+    selectedTapeObj,
     control,
-    reset,
-    watch,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      title: "",
-      description: "",
-      status: "VILLAIN",
-      tags: [],
-      approachArr: [createApproach(1)],
-      tapeText: "",
-      tapeColor: "lime",
-    },
-  });
-
-  const {
-    fields: approaches,
-    append,
-    remove,
-  } = useFieldArray({
-    control,
-    name: "approachArr",
-  });
-
-  const watchedApproaches = watch("approachArr");
-  const watchedTapeColor = watch("tapeColor");
-  const watchedTapeText = watch("tapeText");
-  const selectedTapeObj =
-    tapeColors.find((c) => c.id === watchedTapeColor) || tapeColors[0];
-
-  const currentApproach =
-    watchedApproaches?.[activeApproachIdx] ||
-    watchedApproaches?.[0] ||
-    approaches?.[0];
-
-  useEffect(() => {
-    if (!isOpen) return;
-    if (selectedArc) {
-      reset({
-        title: selectedArc.title || "",
-        description: selectedArc.description || selectedArc.quote || "",
-        status: selectedArc.status || "VILLAIN",
-        tags: selectedArc.tags || [],
-        approachArr: selectedArc.approachArr?.length
-          ? selectedArc.approachArr
-          : [createApproach(1)],
-        tapeColor: selectedArc.tapeColor || "lime",
-        tapeText: selectedArc.tapeText || "",
-      });
-    } else {
-      reset({
-        title: "",
-        description: "",
-        status: "VILLAIN",
-        tags: [],
-        approachArr: [createApproach(1)],
-        tapeText: "",
-        tapeColor: "lime",
-      });
-    }
-    setActiveApproachIdx(0);
-  }, [selectedArc, isOpen, reset]);
-
-  // --------------------------------------------------
-  // ESCAPE LISTENER & BODY SCROLL LOCK
-  // --------------------------------------------------
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === "Escape" && isOpen) {
-        onClose();
-      }
-    };
-
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-      window.addEventListener("keydown", handleKeyDown);
-    } else {
-      document.body.style.overflow = "";
-    }
-
-    return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [isOpen, onClose]);
-
-  if (!isOpen) return null;
-
-  // --------------------------------------------------
-  // ADD & REMOVE APPROACH
-  // --------------------------------------------------
-  const handleAddApproach = () => {
-    const nextIndex = approaches.length + 1;
-    append(createApproach(nextIndex));
-    setActiveApproachIdx(approaches.length);
-  };
-
-  const handleRemoveApproach = (idxToRemove, e) => {
-    e.stopPropagation();
-    if (approaches.length <= 1) return;
-    remove(idxToRemove);
-    if (activeApproachIdx >= idxToRemove) {
-      setActiveApproachIdx((prev) => Math.max(0, prev - 1));
-    }
-  };
-
-  // --------------------------------------------------
-  // FORM SUBMIT
-  // --------------------------------------------------
-  const onFormSubmit = (data) => {
-    const payload = {
-      status: data.status,
-      statusBadge:
-        data.status === "FINAL"
-          ? "FINAL FORM ✅"
-          : data.status === "MID"
-            ? "MID-ARC ⚡"
-            : "VILLAIN ERA 💀",
-      statusBadgeStyle:
-        data.status === "FINAL"
-          ? "bg-primary-container text-on-primary-fixed"
-          : data.status === "MID"
-            ? "bg-secondary-container text-on-secondary-container font-black"
-            : "bg-inverse-surface text-inverse-on-surface",
-      title: data.title,
-      tags: data.tags,
-      quote: data.description,
-      approachArr: data.approachArr,
-      tapeColor: data.tapeColor,
-      tapeText: data.tapeText,
-    };
-    let newProblemsArr;
-    if (selectedArc) {
-      console.log("I was runned from edit");
-      newProblemsArr = allProblems.map((arc) =>
-        arc.id === selectedArc.id ? { ...payload, id: selectedArc.id } : arc,
-      );
-      console.log("New Problem", newProblemsArr);
-    } else {
-      newProblemsArr = [...allProblems, { ...payload, id: nanoid() }];
-    }
-    console.log(newProblemsArr);
+    handleRemoveApproach,
+    setActiveApproachIdx,
     
-    setAllProblems(newProblemsArr);
-    localStorage.setItem("allProblems", JSON.stringify(newProblemsArr));
-    onClose();
-  };
+  } = useArcModal();
+  if (!isArcModalOpen) return null;
 
   return (
     <div
       className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-5 md:p-8 bg-black/60 backdrop-blur-md backdrop-saturate-150 overflow-y-auto animate-in fade-in duration-200"
-      onClick={onClose}
+      onClick={handleCloseArcModal}
     >
       <div
         className="relative w-full max-w-4xl bg-surface-container-lowest border-2 border-on-surface shadow-[10px_10px_0px_#111116] my-auto text-on-surface transition-all"
         onClick={(e) => e.stopPropagation()}
       >
         {/* TOP PIN BADGE */}
-        <TopPinBadge selectedArc={selectedArc} />
+        <TopPinBadge />
 
         {/* MODAL HEADER */}
-        <ModalHeader selectedArc={selectedArc} onClose={onClose} />
+        <ModalHeader />
 
         {/* MODAL FORM */}
         <form onSubmit={handleSubmit(onFormSubmit)}>
@@ -262,34 +109,30 @@ const ArcModal = ({
                   </label>
 
                   <div className="flex gap-1.5 flex-wrap sm:flex-nowrap">
-                    {[
-                      { value: "VILLAIN", label: "VILLAIN 💀" },
-                      { value: "MID", label: "MID-ARC ⚡" },
-                      { value: "FINAL", label: "FINAL FORM ✅" },
-                    ].map((option) => (
+                    {statusFilters.map((option) => (
                       <label
-                        key={option.value}
+                        key={option.id}
                         className="flex-1 cursor-pointer select-none"
                       >
                         <input
                           type="radio"
-                          value={option.value}
+                          value={option.id}
                           {...register("status")}
                           className="sr-only peer"
                         />
                         <div
                           className={`py-2 px-1 text-center font-label-sm text-[10px] uppercase font-bold border-2 border-on-surface transition-all
                   ${
-                    option.value === "VILLAIN"
+                    option.id === "VILLAIN"
                       ? "peer-checked:bg-inverse-surface peer-checked:text-inverse-on-surface"
-                      : option.value === "MID"
+                      : option.id === "MID"
                         ? "peer-checked:bg-secondary-container peer-checked:text-on-secondary-container font-black"
                         : "peer-checked:bg-primary-container peer-checked:text-on-primary-fixed"
                   }
                   peer-checked:shadow-[3px_3px_0px_#111116]
                   peer-checked:-translate-y-0.5
                   bg-surface-container-lowest hover:bg-surface-container
-                  `}
+                  text-nowrap`}
                         >
                           {option.label}
                         </div>
@@ -559,7 +402,7 @@ const ArcModal = ({
           </div>
 
           {/* MODAL FOOTER */}
-          <ModalFooter onClose={onClose} selectedArc={selectedArc} />
+          <ModalFooter />
         </form>
       </div>
     </div>

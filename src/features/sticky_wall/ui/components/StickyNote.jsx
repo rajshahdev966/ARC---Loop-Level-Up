@@ -32,7 +32,7 @@ const StickyNote = ({ note, isFlipped }) => {
       >
         {/* Front Face */}
         <div
-          className={`absolute inset-0 w-full h-full ${note.bgFront} text-on-background p-space-lg flex flex-col justify-between border-2 border-on-surface shadow-[4px_4px_0px_#111116] [backface-visibility:hidden]`}
+          className={`absolute inset-0 w-full h-full ${note.bgFront} text-[#111116] p-space-lg flex flex-col justify-between border-2 border-on-surface shadow-[4px_4px_0px_#111116] [backface-visibility:hidden]`}
         >
           {/* Pushpin or Tape */}
           <div
@@ -60,10 +60,10 @@ const StickyNote = ({ note, isFlipped }) => {
           </div>
 
           <div className="mt-4 space-y-space-xs pt-4">
-            <h3 className="font-display-md text-headline-md text-on-background pt-1 leading-tight font-bold">
+            <h3 className="font-display-md text-headline-md text-[#111116] pt-1 leading-tight font-bold">
               {note.title}
             </h3>
-            <p className="font-body-lg text-body-md text-on-background/90 pt-space-xs leading-relaxed italic font-medium">
+            <p className="font-body-lg text-body-md text-[#111116]/90 pt-space-xs leading-relaxed italic font-medium">
               {note.quote}
             </p>
           </div>
@@ -72,7 +72,7 @@ const StickyNote = ({ note, isFlipped }) => {
             <button
               type="button"
               onClick={() => toggleFlip(note.id)}
-              className="flex items-center gap-1 bg-on-background text-surface px-3 py-1.5 font-label-md text-label-sm uppercase font-bold border border-on-surface shadow-[2px_2px_0px_#111116] hover:bg-primary transition-colors cursor-pointer active:translate-x-[1px] active:translate-y-[1px]"
+              className="flex items-center gap-1 bg-[#111116] text-white px-3 py-1.5 font-label-md text-label-sm uppercase font-bold border border-on-surface shadow-[2px_2px_0px_#111116] hover:bg-primary hover:text-on-primary transition-colors cursor-pointer active:translate-x-[1px] active:translate-y-[1px]"
             >
               <span>Code 📄</span>
               <RiArrowLeftRightLine className="w-3.5 h-3.5" />

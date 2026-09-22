@@ -1,69 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { RiAddLine, RiSearchLine } from "@remixicon/react";
 import availableTags from "../../../../shared/constants/availableTags";
+import { VisionBoardContext } from "../../../../config/VisionBoardContext";
+import statusFilters from "../../../../shared/constants/statusFilters";
 
-const FilterBoard = ({
-  onOpenNewArc = () => {},
-  allProblems,
-  activeStatus,
-  setActiveStatus,
-  activeTopic,
-  setActiveTopic,
-  searchQuery,
-  setSearchQuery,
-}) => {
 
- 
+const FilterBoard = () => {
 
-  const statusFilters = [
-    {
-      id: "ALL",
-      label: "ALL",
-      activeStyle: "bg-primary-container text-on-primary-fixed",
-    },
-    {
-      id: "VILLAIN",
-      label: "VILLAIN ERA💀",
-      activeStyle: "bg-error-container text-on-error-container",
-    },
-    {
-      id: "MID",
-      label: "MID-ARC⚡",
-      activeStyle: "bg-secondary-container text-on-secondary-container",
-    },
-    {
-      id: "FINAL",
-      label: "FINAL FORM✅",
-      activeStyle: "bg-primary-container text-on-primary-fixed",
-    },
-  ];
-
-  const topicFilters = [
-    {
-      id: "DP",
-      label: "#DynamicProgramming",
-      tilt: "-rotate-1",
-      hoverBg: "hover:bg-primary-fixed",
-    },
-    {
-      id: "Graphs",
-      label: "#Graphs",
-      tilt: "rotate-1",
-      hoverBg: "hover:bg-tertiary-container",
-    },
-    {
-      id: "Trees",
-      label: "#Trees",
-      tilt: "-rotate-2",
-      hoverBg: "hover:bg-secondary-fixed",
-    },
-    {
-      id: "SlidingWindow",
-      label: "#SlidingWindow",
-      tilt: "rotate-2",
-      hoverBg: "hover:bg-primary-container",
-    },
-  ];
+  const {
+    allProblems,
+    activeStatus,
+    setActiveStatus,
+    activeTopic,
+    setActiveTopic,
+    searchQuery,
+    setSearchQuery,
+    handleOpenNewArc,
+  } = useContext(VisionBoardContext);
 
   return (
     <section className="w-full px-gutter lg:px-gutter-desktop mt-space-sm mb-space-md">
@@ -73,7 +26,7 @@ const FilterBoard = ({
         <div className="relative z-30 shrink-0 mb-3 md:mb-0 md:-mr-8 self-center group">
           <button
             type="button"
-            onClick={onOpenNewArc}
+            onClick={handleOpenNewArc}
             className="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[#CCFF00] dark:bg-primary-container text-on-primary-fixed border-[3px] border-on-surface shadow-[5px_5px_0px_#111116] -rotate-6 group-hover:rotate-0 group-hover:scale-105 active:translate-x-1 active:translate-y-1 transition-all duration-200 flex flex-col items-center justify-center p-2 cursor-pointer select-none ring-4 ring-canvas-bg"
             title="Pin a new arc / problem log"
             aria-label="Pin a new arc"

@@ -1,7 +1,9 @@
 import { RiCloseLine } from "@remixicon/react";
-import React from "react";
+import React, { useContext } from "react";
+import { VisionBoardContext } from "../../../../config/VisionBoardContext";
 
-const ModalHeader = React.memo(({ selectedArc, onClose }) => {
+const ModalHeader = React.memo(() => {
+    const {handleCloseArcModal, selectedArc } = useContext(VisionBoardContext)
   return (
     <div className="border-b-2 border-on-surface p-5 sm:p-6 pb-4 pt-6 flex items-start justify-between gap-4">
       <div>
@@ -28,7 +30,7 @@ const ModalHeader = React.memo(({ selectedArc, onClose }) => {
 
       <button
         type="button"
-        onClick={onClose}
+        onClick={handleCloseArcModal}
         className="shrink-0 w-8 h-8 flex items-center justify-center border-2 border-on-surface bg-surface-container-lowest hover:bg-error-container hover:text-on-error-container text-on-surface shadow-[3px_3px_0px_#111116] active:translate-x-[1px] active:translate-y-[1px] transition-all cursor-pointer"
         aria-label="Close modal"
       >

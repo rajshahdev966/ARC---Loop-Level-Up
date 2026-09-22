@@ -1,204 +1,217 @@
-import { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useContext, useEffect, useState } from "react";
+import { useFieldArray, useForm } from "react-hook-form";
+import { VisionBoardContext } from "../../../config/VisionBoardContext";
+import tapeColors from "../../../shared/constants/tapeColors";
 import { nanoid } from "nanoid";
 
-export const AVAILABLE_TAGS = [
-  "#ARRAYS",
-  "#DP",
-  "#STRINGS",
-  "#TWOPOINTERS",
-  "#SLIDINGWINDOW",
-  "#SORTING",
-  "#BINARYSEARCH",
-  "#HASHING",
-  "#STACK",
-  "#MONOTONICSTACK",
-  "#QUEUE",
-  "#LINKEDLIST",
-  "#TREES",
-  "#BST",
-  "#HEAP",
-  "#TRIE",
-  "#GRAPHS",
-  "#UNIONFIND",
-  "#RECURSION",
-  "#BACKTRACKING",
-  "#DYNAMICPROGRAMMING",
-  "#GREEDY",
-  "#BITMANIPULATION",
-];
+const useArcModal = () => {
+  const createApproach = (idx = 1) => {
+    const formattedNum = String(idx).padStart(2, "0");
+    return {
+      tabName:
+        idx === 1
+          ? "APPROACH 01 [BRUTE / VILLAIN]"
+          : `APPROACH ${formattedNum} [OPTIMIZED]`,
+      name:
+        idx === 1
+          ? "Approach 1: Brute Force Struggle (O(n²))"
+          : `Approach ${idx}: Optimized Strategy`,
+      language: "python",
+      code: `# Document your approach, time/space complexity & thought process\nclass Solution:\n    def solve(self):\n        pass`,
+    };
+  };
 
-export const DEFAULT_APPROACH = {
-  id: "approach-1",
-  tabName: "APPROACH 01 [BRUTE]",
-  name: "Approach 1: Brute Force",
-  tapeColor: "pink",
-  tapeText: "// TAPE: BRUTE SCAN",
-  tapePreview: "// TAPE: BRUTE",
-  fileName: "// SOLUTION.CPP",
-  language: "cpp",
-  code: `// Write your brute force or initial approach here
-class Solution {
-public:
-    void solve() {
-        
-    }
-};`,
-};
+  const {
+    allProblems,
+    setAllProblems,
+    selectedArc,
+    setSelectedArc,
+    isArcModalOpen,
+    handleCloseArcModal,
+  } = useContext(VisionBoardContext);
 
-const useArcModal = ({ isOpen, onClose, arcData, onSave }) => {
+  const [activeApproachIdx, setActiveApproachIdx] = useState(0);
   const {
     register,
     handleSubmit,
+    control,
     reset,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
       title: "",
       description: "",
+      status: "VILLAIN",
+      tags: [],
+      approachArr: [createApproach(1)],
+      tapeText: "",
+      tapeColor: "lime",
     },
   });
 
-  const [stage, setStage] = useState("VILLAIN");
-  const [selectedTags, setSelectedTags] = useState([]);
-  const [approaches, setApproaches] = useState([DEFAULT_APPROACH]);
-  const [activeApproachIdx, setActiveApproachIdx] = useState(0);
+  const {
+    fields: approaches,
+    append,
+    remove,
+  } = useFieldArray({
+    control,
+    name: "approachArr",
+  });
 
-  // Sync state and form values when arcData changes or modal opens
+  const watchedApproaches = watch("approachArr");
+  const watchedTapeColor = watch("tapeColor");
+  const watchedTapeText = watch("tapeText");
+
+
+  const currentApproach =
+    watchedApproaches?.[activeApproachIdx] ||
+    watchedApproaches?.[0] ||
+    approaches?.[0];
+
   useEffect(() => {
-    if (!isOpen) return;
-
-    if (arcData) {
+    if (!isArcModalOpen) return;
+    if (selectedArc) {
       reset({
-        title: arcData.title || "",
-        description: arcData.quote || arcData.description || "",
+        title: selectedArc.title || "",
+        description: selectedArc.description || selectedArc.quote || "",
+        status: selectedArc.status || "VILLAIN",
+        tags: selectedArc.tags || [],
+        approachArr: selectedArc.approachArr?.length
+          ? selectedArc.approachArr
+          : [createApproach(1)],
+        tapeColor: selectedArc.tapeColor || "lime",
+        tapeText: selectedArc.tapeText || "",
       });
-      setStage(arcData.status || arcData.statusBadge || "VILLAIN");
-
-      if (Array.isArray(arcData.tags)) {
-        setSelectedTags(arcData.tags);
-      } else if (typeof arcData.tag === "string") {
-        setSelectedTags(arcData.tag.toUpperCase().split(" ").filter(Boolean));
-      } else {
-        setSelectedTags([]);
-      }
-
-      const existingApproaches =
-        arcData.approachArr || arcData.approaches || [];
-      setApproaches(
-        existingApproaches.length > 0 ? existingApproaches : [DEFAULT_APPROACH]
-      );
-      setActiveApproachIdx(0);
     } else {
-      // Default reset for new arc creation
       reset({
         title: "",
         description: "",
+        status: "VILLAIN",
+        tags: [],
+        approachArr: [createApproach(1)],
+        tapeText: "",
+        tapeColor: "lime",
       });
-      setStage("VILLAIN");
-      setSelectedTags(["#ARRAYS"]);
-      setApproaches([
-        {
-          ...DEFAULT_APPROACH,
-          id: `approach-${Date.now()}`,
-        },
-      ]);
-      setActiveApproachIdx(0);
     }
-  }, [arcData, isOpen, reset]);
+    setActiveApproachIdx(0);
+  }, [selectedArc, isArcModalOpen, reset]);
 
-  // Handle ESC key to close
+  // --------------------------------------------------
+  // ESCAPE LISTENER & BODY SCROLL LOCK
+  // --------------------------------------------------
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === "Escape" && isOpen) {
-        onClose();
+      if (e.key === "Escape" && isArcModalOpen) {
+        handleCloseArcModal();
       }
     };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, onClose]);
 
-  // Lock body scroll when modal is open
-  useEffect(() => {
-    if (isOpen) {
+    if (isArcModalOpen) {
       document.body.style.overflow = "hidden";
+      window.addEventListener("keydown", handleKeyDown);
     } else {
       document.body.style.overflow = "";
     }
+
     return () => {
       document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isOpen]);
+  }, [isArcModalOpen, handleCloseArcModal]);
 
-  const currentApproach = approaches?.[activeApproachIdx] || approaches?.[0] || DEFAULT_APPROACH;
 
-  const handleTagToggle = (tag) => {
-    setSelectedTags((prev) =>
-      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
-    );
-  };
-
+  // --------------------------------------------------
+  // ADD & REMOVE APPROACH
+  // --------------------------------------------------
   const handleAddApproach = () => {
-    const newIdx = approaches.length + 1;
-    const formattedNum = String(newIdx).padStart(2, "0");
-    const newApproach = {
-      id: `approach-${nanoid(6)}`,
-      tabName: `APPROACH ${formattedNum} [NEW ARCH]`,
-      name: `Approach ${newIdx}: Optimized Strategy`,
-      tapeColor: "cyan",
-      tapeText: `// TAPE: APPROACH ${newIdx} LOG`,
-      tapePreview: `// TAPE: APP ${formattedNum}`,
-      fileName: `// APPROACH_${formattedNum}.CPP`,
-      language: currentApproach?.language || "cpp",
-      code: `// Approach ${newIdx} implementation\nclass Solution {\npublic:\n    void solve() {\n        \n    }\n};`,
-    };
-    setApproaches((prev) => [...prev, newApproach]);
+    const nextIndex = approaches.length + 1;
+    append(createApproach(nextIndex));
     setActiveApproachIdx(approaches.length);
   };
 
-  const updateCurrentApproach = (fields) => {
-    setApproaches((prev) =>
-      prev.map((app, idx) =>
-        idx === activeApproachIdx ? { ...app, ...fields } : app
-      )
-    );
+  const handleRemoveApproach = (idxToRemove, e) => {
+    e.stopPropagation();
+    if (approaches.length <= 1) return;
+    remove(idxToRemove);
+    if (activeApproachIdx >= idxToRemove) {
+      setActiveApproachIdx((prev) => Math.max(0, prev - 1));
+    }
   };
 
-  const onSubmit = (formData) => {
+  // --------------------------------------------------
+  // FORM SUBMIT
+  // --------------------------------------------------
+  const onFormSubmit = (data) => {
     const payload = {
-      id: arcData?.id || `arc-${nanoid(8)}`,
-      title: formData.title,
-      description: formData.description,
-      quote: formData.description,
-      status: stage,
-      statusBadge: stage,
-      tag: selectedTags.join(" "),
-      tags: selectedTags,
-      approachArr: approaches,
-      approaches,
-      activeApproach: currentApproach,
-      updatedAt: new Date().toISOString(),
+      status: data.status,
+      statusBadge:
+        data.status === "FINAL"
+          ? "FINAL FORM ✅"
+          : data.status === "MID"
+            ? "MID-ARC ⚡"
+            : "VILLAIN ERA 💀",
+      statusBadgeStyle:
+        data.status === "FINAL"
+          ? "bg-primary-container text-on-primary-fixed"
+          : data.status === "MID"
+            ? "bg-secondary-container text-on-secondary-container font-black"
+            : "bg-inverse-surface text-inverse-on-surface",
+      title: data.title,
+      tags: data.tags,
+      quote: data.description,
+      approachArr: data.approachArr,
+      tapeColor: data.tapeColor,
+      tapeText: data.tapeText,
     };
-    onSave(payload);
-    onClose();
+    let newProblemsArr;
+    if (selectedArc) {
+      console.log("I was runned from edit");
+      newProblemsArr = allProblems.map((arc) =>
+        arc.id === selectedArc.id ? { ...payload, id: selectedArc.id } : arc,
+      );
+      console.log("New Problem", newProblemsArr);
+    } else {
+      newProblemsArr = [...allProblems, { ...payload, id: nanoid() }];
+    }
+    console.log(newProblemsArr);
+
+    setAllProblems(newProblemsArr);
+    localStorage.setItem("allProblems", JSON.stringify(newProblemsArr));
+    handleCloseArcModal();
   };
 
-  return {
-    register,
-    handleSubmit,
-    errors,
-    stage,
-    setStage,
-    selectedTags,
-    handleTagToggle,
-    approaches,
-    activeApproachIdx,
-    setActiveApproachIdx,
-    currentApproach,
-    handleAddApproach,
-    updateCurrentApproach,
-    onSubmit,
-  };
+
+  const selectedTapeObj =
+    tapeColors.find((c) => c.id === watchedTapeColor) || tapeColors[0];
+ return {
+  // Form
+  register,
+  control,
+  errors,
+  handleSubmit,
+  onFormSubmit,
+
+  // Approach data
+  approaches,
+  watchedApproaches,
+  currentApproach,
+  activeApproachIdx,
+
+  // Tape
+  watchedTapeText,
+  watchedTapeColor,
+  selectedTapeObj,
+
+  // Actions
+  handleAddApproach,
+  handleCloseArcModal,
+  handleRemoveApproach,
+  setActiveApproachIdx,
+
+  // Modal state
+  isArcModalOpen,
+};
 };
 
 export default useArcModal;

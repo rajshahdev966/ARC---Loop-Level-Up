@@ -3,19 +3,26 @@ import {
   RiSunLine,
   RiMoonLine,
   RiUserFill,
-  RiFireFill,
 } from "@remixicon/react";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import useNavbar from "../../hooks/useNavbar";
 
-const Navbar = React.memo(({ isDark = false, onToggleTheme = () => {} }) => {
-  const { NAV_ITEMS, handle, archetype } = useNavbar();
+const Navbar = React.memo(({ isDark: propIsDark, onToggleTheme: propOnToggleTheme, onNavigate }) => {
+  const { NAV_ITEMS, handle, archetype, isDark: hookIsDark, toggleTheme: hookToggleTheme } = useNavbar();
+  const navigate = useNavigate();
+
+  const isDark = propIsDark !== undefined ? propIsDark : hookIsDark;
+  const onToggleTheme = propOnToggleTheme || hookToggleTheme;
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-canvas-bg/90 backdrop-blur-md border-b border-on-surface/10 transition-colors">
       <div className="h-20 w-full px-gutter lg:px-gutter-desktop flex items-center justify-between gap-space-md">
-        {/* Brand Logo & Log Badge */}
-        <div className="flex items-center gap-space-sm cursor-pointer group">
+        {/* Brand Logo & Home Link */}
+        <div
+          onClick={() => navigate("/main")}
+          className="flex items-center gap-space-sm cursor-pointer group"
+          title="ARC Home"
+        >
           <img
             src={isDark ? "/arc_dark_logo.png" : "/arc_logo.png"}
             alt="ARC - Loop & Level Up"
@@ -67,20 +74,29 @@ const Navbar = React.memo(({ isDark = false, onToggleTheme = () => {} }) => {
             )}
           </button>
 
+          {/* User Profile Badge */}
           <div
-            onClick={() => onNavigate("login")}
-            className="flex items-center gap-space-xs bg-surface-container-lowest px-2 py-0.5 border border-on-surface shadow-[3px_3px_0px_#111116] cursor-pointer hover:bg-surface-container active:translate-x-[1px] active:translate-y-[1px] transition-all"
+            onClick={() => {
+              if (typeof onNavigate === "function") {
+                onNavigate("login");
+              } else {
+                navigate("/");
+              }
+            }}
+            className="flex items-center gap-space-xs bg-surface-container-lowest px-2 py-0.5 border border-on-surface shadow-[3px_3px_0px_#111116] cursor-pointer hover:bg-surface-container active:translate-x-[1px] active:translate-y-[1px] transition-all relative"
             title="Open Dev Handle Claim / Login"
           >
-            <div className="rounded-full bg-primary flex items-center justify-center">
+            <div className="rounded-full bg-primary flex items-center justify-center p-1">
               <RiUserFill className="w-4 h-4 text-on-primary" />
-              <div className="absolute top-12 right-3 p-0.5 bg-primary-container/85 font-code-md border border-on-surface/40 -rotate-2 shadow-sm pointer-events-none">
-                {archetype}
-              </div>
+              {archetype && (
+                <div className="absolute -bottom-4 -right-5 -rotate-2 px-1 py-0.2 bg-primary-container text-on-primary-fixed font-code-md text-[9px] font-black border border-on-surface shadow-sm pointer-events-none uppercase">
+                  {archetype}
+                </div>
+              )}
             </div>
 
             <span className="hidden lg:inline font-code-md text-label-sm font-bold text-on-surface">
-              {handle}
+              {handle || "@dev_handle"}
             </span>
           </div>
         </div>
