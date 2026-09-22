@@ -1,3 +1,4 @@
+import LandingPage from "../features/landing/ui/pages/LandingPage"
 import LoginPage from "../features/auth/ui/pages/LoginPage"
 import { createBrowserRouter, RouterProvider } from 'react-router'
 import VisionBoard from "../features/vission_board/ui/pages/VisionBoard"
@@ -12,6 +13,14 @@ import { VisionBoardContextProvider } from "../config/VisionBoardContext"
 const router = createBrowserRouter([
     {
         path: '/',
+        element: <LandingPage />
+    },
+    {
+        path: '/landing',
+        element: <LandingPage />
+    },
+    {
+        path: '/login',
         element: <AuthProtected />,
         children: [
             {

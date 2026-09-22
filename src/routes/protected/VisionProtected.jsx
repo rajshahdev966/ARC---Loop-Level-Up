@@ -4,7 +4,7 @@ import { Outlet, Navigate } from "react-router"
 const VisionProtected = ()=> {
     const {handle, archetype} = useSelector((state)=> state.auth);
     if(!handle || !archetype){
-        return <Navigate to={"/"}/>
+        return <Navigate to={"/login"}/>
     }
     return <Outlet/>
 }

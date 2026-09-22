@@ -35,6 +35,7 @@ const useNavbar = () => {
   }, []);
 
   const NAV_ITEMS = [
+    { id: "landing", label: "Home", path: "/" },
     { id: "vision-board", label: "Vision Board", path: "/main" },
     { id: "sticky-wall", label: "Sticky Wall", path: "/main/sticky" },
     { id: "your-wrapped", label: "Your Wrapped", path: "/main/wrapped" },

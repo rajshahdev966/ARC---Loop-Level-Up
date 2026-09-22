@@ -19,7 +19,7 @@ const Navbar = React.memo(({ isDark: propIsDark, onToggleTheme: propOnToggleThem
       <div className="h-20 w-full px-gutter lg:px-gutter-desktop flex items-center justify-between gap-space-md">
         {/* Brand Logo & Home Link */}
         <div
-          onClick={() => navigate("/main")}
+          onClick={() => navigate("/")}
           className="flex items-center gap-space-sm cursor-pointer group"
           title="ARC Home"
         >
@@ -80,7 +80,7 @@ const Navbar = React.memo(({ isDark: propIsDark, onToggleTheme: propOnToggleThem
               if (typeof onNavigate === "function") {
                 onNavigate("login");
               } else {
-                navigate("/");
+                navigate("/login");
               }
             }}
             className="flex items-center gap-space-xs bg-surface-container-lowest px-2 py-0.5 border border-on-surface shadow-[3px_3px_0px_#111116] cursor-pointer hover:bg-surface-container active:translate-x-[1px] active:translate-y-[1px] transition-all relative"
