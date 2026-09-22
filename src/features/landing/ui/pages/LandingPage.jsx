@@ -1022,7 +1022,7 @@ class Solution:
                   onClick={() => handleStartArc("/login")}
                   className="w-full py-4 px-6 bg-surface-container-highest text-on-surface border-2 border-on-surface font-display font-bold text-sm uppercase shadow-[4px_4px_0px_#111116] hover:bg-surface-container-low active:translate-x-[2px] active:translate-y-[2px] transition-all cursor-pointer"
                 >
-                  JOIN PRO COHORT
+                  DROPPING SOON
                 </button>
               </div>
             </div>

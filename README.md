@@ -1,249 +1,208 @@
-# ⚡ ArcWeb // DSA Glow-Up Log & Developer Operating System
+<div align="center">
 
-> **Turn the leetcode grind from a sterile algorithmic conveyor belt into an expressive, narrative-driven engineering saga.**  
-> Built for the next generation of engineers who treat problem solving not as rote memorization, but as an aesthetic, iterative craft.
+# ⚡ ARC
+### *the DSA glow-up log, disguised as a scrapbook*
 
----
+`STATUS: FINAL FORM` · `DIFFICULTY: VILLAIN-TIER` · `PATTERNS: 6+` · `VIBES: IMMACULATE`
 
-## 🚀 Executive Product Overview
+![React](https://img.shields.io/badge/REACT-19-111116?style=for-the-badge&logo=react&logoColor=CCFF00)
+![Vite](https://img.shields.io/badge/VITE-7-111116?style=for-the-badge&logo=vite&logoColor=FF2A85)
+![Tailwind](https://img.shields.io/badge/TAILWIND-v4-111116?style=for-the-badge&logo=tailwindcss&logoColor=00E5FF)
+![Redux](https://img.shields.io/badge/REDUX_TOOLKIT-111116?style=for-the-badge&logo=redux&logoColor=CCFF00)
+![Monaco](https://img.shields.io/badge/MONACO_EDITOR-111116?style=for-the-badge&logo=visualstudiocode&logoColor=FF2A85)
+<div align="center">
 
-### The Problem ArcWeb Solves
-The modern technical interview preparation landscape is fundamentally broken:
-1. **The Rote Memorization Trap:** Traditional platforms (LeetCode, HackerRank, NeetCode) treat algorithmic mastery as a binary status (`Accepted` or `Failed`), discarding the messy, creative iteration that real software engineering demands.
-2. **Bland, Uninspiring Tooling:** Engineers default to Notion, Excel, or blank Markdown files—sterile productivity tools designed for corporate memos, offering zero visceral feedback, no identity, and high friction for code capture.
-3. **The Emotional Disconnect:** The process of moving from a brute-force $O(N^2)$ solution to an optimal $O(N)$ hash-map or two-pointer approach is an emotional journey—from frustration ("Villain Era") to experimentation ("Mid-Arc") to mastery ("Final Form"). Existing tools strip away this narrative, fueling burnout and grind fatigue.
+[![▶ LAUNCH ARC](https://img.shields.io/badge/▶_LAUNCH_ARC-111116?style=for-the-badge&labelColor=CCFF00&color=111116&logo=vercel&logoColor=111116)](https://arc-loop-level-up.vercel.app/)
 
-### The ArcWeb Solution
-**ArcWeb** is an opinionated, neo-brutalist developer companion and algorithm laboratory. It blends the tactile, expressive energy of a physical cyber-scrapbook with the high-octane engineering rigor of a modern cloud IDE. Instead of merely logging problems, developers document their *evolutionary arc* across distinct approaches, test hypotheses with in-browser code execution, pin ephemeral insights to an interactive 3D sticky wall, and anticipate dynamic engineering retrospective dossiers.
+</div>
 
----
-
-## 🎨 Unique Gen-Z Cyber-Scrapbook / Neo-Brutalist UI Identity
-
-ArcWeb rejects corporate minimalism and generic template designs, pioneering a distinct visual identity tailored to Gen Z developers:
-
-- **Tactile Neo-Brutalist Design System:** Heavy 2px–3px solid `#111116` borders, deliberate high-contrast surfaces, and solid offset drop shadows (`shadow-[4px_4px_0px_#111116]`, `shadow-[6px_6px_0px_#111116]`). Interactive elements feature tactile physical spring feedback (`active:translate-x-[2px] active:translate-y-[2px] active:shadow-none`).
-- **Cyber-Scrapbook Metaphor:** Digital paper textures, rotated pinned badges (`-rotate-1`, `rotate-2`), washi tape stickers with authentic diagonal hazard stripes, metallic paper clips, and color-coded pushpins.
-- **Narrative-Driven DSA Eras:** Problem solving is structured through culturally resonant terminology:
-  - 💀 **Villain Era:** The raw, brute-force struggle. Time limit exceeded, messy logic, unfiltered thinking.
-  - ⚡ **Mid-Arc:** The breakthrough. Pattern recognition, pruning edge cases, refactoring.
-  - ✅ **Final Form:** Optimal Big-$O$ time & space complexity, clean idioms, interview-ready presentation.
-- **Precision Triple-Typography Hierarchy:**
-  - **Headlines & Display:** `Syne` (Bold / Extrabold 800) for punchy, industrial brand statements.
-  - **Body & Controls:** `Space Grotesk` for ergonomic legibility with brutalist geometry.
-  - **Code & Metadata:** `JetBrains Mono` for code snippets, complexity tags, and command logs.
+</div>
 
 ---
 
-## 📁 System Architecture & File Structure
+## 📌 Pinned to the top of the board
 
-ArcWeb is architected using a scalable **Feature-Sliced Design (FSD)** pattern, strictly separating domain features, shared design tokens, routing guards, and global store management.
+This isn't a project readme. It's a **Problem Card** — the same format ARC uses for every DSA problem you log inside the app. Brute force first, optimized solution second, complexity analysis at the end. Read it like you'd read your own arc.
 
 ```
-Arc/
-├── index.html                           # Entry HTML with zero-flash theme bootstrap & Google Fonts
-├── vite.config.js                       # Vite 7 build configuration with React & Tailwind plugins
-├── package.json                         # Modern React 19, Tailwind v4, Monaco Editor, Redux Toolkit
-├── public/
-│   ├── arc_logo.png                     # Light mode brand identity mark
-│   └── arc_dark_logo.png                # High-contrast dark mode brand identity mark
-└── src/
-    ├── main.jsx                         # Application entrypoint & DOM mounting
-    ├── App.jsx                          # Root wrapper with React Router & Toastify notifications
-    ├── index.css                        # CSS Design Tokens, @theme variables, custom utilities
-    │
-    ├── app/                             # Global Application State
-    │   └── store/
-    │       └── store.jsx                # Redux Toolkit root store configuration
-    │
-    ├── config/                          # Feature Context Providers (Separation of Concerns)
-    │   ├── VisionBoardContext.jsx       # Context for algorithm problem cards, active tags, & CRUD
-    │   └── StickyNoteContext.jsx        # Context for sticky board state, color management, & notes
-    │
-    ├── routes/                          # Routing Layer
-    │   ├── AppRoutes.jsx                # Browser router configuration with nested layouts
-    │   └── protected/
-    │       ├── AuthProtected.jsx        # Route guard: redirects authenticated users to /main
-    │       └── VisionProtected.jsx      # Route guard: ensures dev profile exists before board access
-    │
-    ├── shared/                          # Shared Design System & Reusable Components
-    │   ├── constants/
-    │   │   ├── availableTags.js         # Curated DSA category taxonomies (Graphs, DP, Trees, etc.)
-    │   │   ├── dsaLanguages.js          # Supported programming languages for Monaco Editor
-    │   │   ├── noteColors.js            # Pastel sticky paper palette tokens
-    │   │   ├── statusFilters.js         # Vision Board status filter keys & label definitions
-    │   │   └── tapeColors.js            # Washi tape color presets (Yellow, Pink, Green, Sky, Orange)
-    │   ├── hooks/
-    │   │   └── useNavbar.jsx            # Centralized theme toggling, favicon swapping, & navigation
-    │   └── ui/components/
-    │       ├── Navbar.jsx               # Universal top navigation with brand logo, navlinks, theme toggle
-    │       ├── Footer.jsx               # Cyberpunk brutalist footer with live dev meta
-    │       └── TricolourDisplayButtons.jsx # Retro OS window controls (Mac/Terminal window dots)
-    │
-    └── features/                        # Core Product Domain Modules
-        ├── auth/                        # Developer Onboarding & Persona Setup
-        │   ├── hooks/useLogin.jsx       # Form handlers & handle generation logic
-        │   ├── state/authSlice.jsx      # Redux slice for developer handle, archetype, & auth status
-        │   └── ui/pages/LoginPage.jsx   # Gamified onboarding portal with dev archetype selection
-        │
-        ├── vission_board/               # Core Algorithm Problem Kanban & Log
-        │   ├── ui/components/
-        │   │   ├── FilterBoard.jsx      # Multi-criteria filter pill bar (Status + DSA Tag filters)
-        │   │   └── ProblemCard.jsx      # Pinned card displaying problem stats, complexity, washi tape
-        │   └── ui/pages/VisionBoard.jsx # Main dashboard grid with real-time counters & search
-        │
-        ├── arc_modal/                   # In-Depth Problem Solving & Code Laboratory
-        │   ├── hooks/useArcModal.jsx    # React Hook Form + useFieldArray multi-approach engine
-        │   ├── ui/components/
-        │   │   ├── ModalHeader.jsx      # Window title bar with tricolour controls & category badges
-        │   │   ├── ModalFooter.jsx      # Action dock: approach addition, discard, & save handlers
-        │   │   └── TopPinBadge.jsx      # Authentic rotated pushpin UI anchor
-        │   └── ui/pages/ArcModal.jsx    # Full modal with Monaco code editor, tape customization, & notes
-        │
-        ├── sticky_wall/                 # Ephemeral 3D Pattern Sticky Wall
-        │   ├── hooks/
-        │   │   ├── useStickyNote.jsx    # Sticky note state, 3D flip card toggle, & delete actions
-        │   │   └── useNoteModal.jsx     # Note composition modal controller
-        │   ├── ui/components/
-        │   │   ├── ActionButtons.jsx    # Quick note action buttons & trigger points
-        │   │   ├── NoteModal.jsx        # Rich note creation modal with color & tape customizers
-        │   │   ├── StickyNote.jsx       # 3D flippable note card with front (code/summary) & back (learnings)
-        │   │   └── StickyWallHeader.jsx # Wall metadata, note counter, & quick add actions
-        │   └── ui/pages/StickyWall.jsx  # Interactive bulletin board layout for pattern cheat-sheets
-        │
-        ├── your_wrapped/                # Spotify-Wrapped Style Annual Algorithm Dossier
-        │   └── ui/pages/YourWrapped.jsx # High-impact teaser with 20-day persistent countdown & alerts
-        │
-        └── glow_up/                     # Evolution Comparison & Progress Visualizer
-            └── ui/pages/GlowUpCarousel.jsx # Before/After code transformation carousel showcase
+PROBLEM:      "DSA interview prep culture, as it currently exists"
+DIFFICULTY:   Villain-tier
+CONSTRAINTS:  300,000+ CS grads a year, one grind, zero narrative
+TAGS:         #Burnout #ToolingFatigue #WeAllDidThis
 ```
 
 ---
 
-## 🔍 Section-by-Section Engineering Breakdown & Developer Craft
+## 💀 Approach 01 — Brute Force *(what everyone already tries)*
 
-Every module in ArcWeb was built to demonstrate senior-level frontend engineering, showcasing advanced state management, ergonomic UX, and performance optimization:
+Every CS student runs the same nested loop of tools that were never built for this job:
 
-### 1. Developer Persona Onboarding (`features/auth`)
-- **Concept:** Traditional logins feel like barriers; ArcWeb turns onboarding into an identity-forging ceremony. Users claim an `@dev_handle` and select their coding archetype (`Speed Demon`, `Bug Magnet`, `LeetCode Monk`, `10x Engineer`).
-- **Engineering Highlights:**
-  - **Redux Toolkit Integration:** State persists seamlessly in `authSlice.jsx`, hydrating UI credentials across session lifecycles.
-  - **Routing Guardrail Architecture:** `AuthProtected` and `VisionProtected` higher-order route components prevent unauthorized dashboard access and redirect authenticated hackers away from the login splash screen.
+- **LeetCode / HackerRank** — treats mastery as a binary. `Accepted` or `Failed`. No memory of the three attempts it took to get there.
+- **Notion / Excel / a folder of `.txt` files** — sterile productivity tools borrowed from corporate memos, repurposed to hold the messiest, most emotional part of becoming an engineer.
+- **Your own brain** — trying to remember *why* the hashmap worked, four days and 40 problems later.
 
-### 2. The Vision Board (`features/vission_board`)
-- **Concept:** A mission-control dashboard replacing boring tabular spreadsheets with an expressive pinboard.
-- **Engineering Highlights:**
-  - **Multi-Vector Filtering Engine:** `FilterBoard.jsx` provides instant, reactive cross-filtering across dual dimensions (Progression Statuses: *Villain Era*, *Mid-Arc*, *Final Form* + Topic Tags: *DP*, *Graphs*, *Backtracking*, etc.).
-  - **Custom Washi Tape Rendering:** Every problem card dynamically supports customized tape overlays with diagonal hazard stripes and customizable adhesive hues.
+**Time Complexity:** O(burnout)
+**Space Complexity:** O(1) — because nothing you learn actually sticks around.
 
-### 3. The Arc Modal & Approach Studio (`features/arc_modal`)
-- **Concept:** The crown jewel of ArcWeb. It enables documenting the complete problem-solving lifecycle across multiple attempts instead of overwriting previous code.
-- **Engineering Highlights:**
-  - **Dynamic Field Arrays:** Powered by `react-hook-form`'s `useFieldArray`, allowing developers to append, rename, and toggle between arbitrarily many solution iterations (*Approach 01: Brute Force*, *Approach 02: Memoized DFS*, *Approach 03: Tabulation*) without re-renders leaking into parent components.
-  - **Monaco Code Editor (`@monaco-editor/react`):** Embedded full-scale VS Code editing experience with multi-language syntax highlighting (Python, C++, Java, JavaScript, Go, Rust), auto-indentation, and dark/light synchronization.
-  - **Tape & Theme Customizer:** Integrates granular color pickers and customizable tape headers directly into form schema validation.
-
-### 4. The 3D Interactive Sticky Wall (`features/sticky_wall`)
-- **Concept:** Quick, visceral capture of high-frequency DSA patterns, "aha!" moments, and interview reminders.
-- **Engineering Highlights:**
-  - **Hardware-Accelerated 3D Flip Cards:** Built using CSS `transform-style: preserve-3d` and `rotateY(180deg)` transitions. Clicking the card flips it smoothly between the **Front Sheet** (Code Snippet & Pattern Label) and the **Back Sheet** (Key Takeaways, Time Complexities, Gotchas).
-  - **Accessible Contrast Engineering:** Sticky note surfaces utilize customized dark-mode contrast locks (`text-[#111116]`), preserving the authentic yellow, coral, and mint paper aesthetic regardless of global ambient theme.
-
-### 5. Your Wrapped Retrospective (`features/your_wrapped`)
-- **Concept:** Inspired by Spotify Wrapped, translating a developer's algorithmic struggles and triumphs into a shareable cultural artifact.
-- **Engineering Highlights:**
-  - **Persistent LocalStorage Countdown Engine:** Implements a 20-day launch countdown anchored to an immutable timestamp in browser storage (`arc_wrapped_drop_target_20d`), ensuring timer continuity across refreshes without drift.
-  - **Brutalist Poster Layout:** 3D extruded hot-pink display typography (`drop-shadow-[3px_3px_0px_#111116]`), encrypted dossier mockups, and email notification webhooks.
-
-### 6. Zero-Flash Theme Engine (`shared/hooks/useNavbar.jsx` & `index.html`)
-- **Engineering Highlights:**
-  - **Synchronous `<head>` Injection:** Eliminates the notorious "white flash" on page reload by resolving the `arc_theme` key in `localStorage` before the first DOM paint.
-  - **Dynamic Favicon Sync:** Real-time synchronization between light (`/arc_logo.png`) and dark (`/arc_dark_logo.png`) favicons via the `useNavbar` controller.
+This approach passes the tests. It does not pass the vibe check.
 
 ---
 
-## 🛠️ Tech Stack & Key Dependencies
+## ✅ Approach 02 — Optimized *(this is ARC)*
 
-| Layer | Technology | Rationale |
+The insight: the real story was never "solved" vs. "unsolved." It was **Villain Era → Mid-Arc → Final Form** — and nobody was writing that part down.
+
+ARC is a neo-brutalist, cyber-scrapbook developer OS built to log *that* journey instead of throwing it away. Here's every module, broken down like its own sub-problem:
+
+<br>
+
+### 🪪 `features/auth` — Developer Persona Onboarding
+No sterile login form. You claim an `@dev_handle` and pick a coding archetype (`Speed Demon`, `Bug Magnet`, `LeetCode Monk`, `10x Engineer`) before you ever touch a problem. Onboarding as identity, not paperwork — guarded end-to-end by Redux-backed route protection so nobody stumbles into a board that isn't theirs.
+
+### 📌 The Vision Board — Mission Control
+Your problems, pinned like a corkboard instead of buried in a spreadsheet row. Real-time, cross-filterable by **stage** (Villain Era / Mid-Arc / Final Form) and **topic tag** (Graphs, DP, Backtracking, and the rest) at the same time — no page reload, no stale state. Every card wears its own washi tape, at its own angle, because two problems solved the same day should not look identical.
+
+### 🧪 The Arc Modal — Approach Studio
+The crown jewel. Instead of overwriting your code every time you improve it, `useFieldArray` lets you stack **Approach 01, Approach 02, Approach 03…** side by side — Brute Force, Memoized DFS, Tabulation, whatever your actual path looked like — each with its own Monaco editor, its own language, its own notes on what changed. Nothing gets erased on the way to optimal. The struggle is the receipt.
+
+### 🗒️ The 3D Sticky Wall — Pattern Memory
+Hardware-accelerated flip cards (`preserve-3d`, `rotateY(180deg)`) for the fast stuff — the "wait, THAT'S why two pointers works" moments you'd otherwise lose in a Discord DM to yourself. Front: the pattern. Back: the gotcha. Color-coded, dark-mode-locked so the paper always looks like paper.
+
+### 🎁 Your Wrapped — The Annual Dossier
+Spotify Wrapped, but it's your `O(N²)` era getting turned into a shareable flex instead of a memory you'd rather not revisit. Persistent countdown, zero timer drift, built to be screenshotted.
+
+### 🎢 The Glow-Up Carousel — Before/After, On Demand
+Swipe through your own evolution on a single problem — brute force to final form — the same way you'd flip through a camera roll, not a diff view.
+
+<br>
+
+**Time Complexity:** O(actually remembering what you learned)
+**Space Complexity:** O(n) — where n is how many arcs you've got the guts to pin.
+
+---
+
+## 🎨 Design DNA
+
+ARC rejects the beige SaaS dashboard on purpose. The whole interface runs on one rule: **if it doesn't look like it was physically pinned, taped, or stamped onto a desk, it doesn't belong.**
+
+| Token | Value | Where it shows up |
 |---|---|---|
-| **Core Framework** | React 19 + Vite 7 | Lightning-fast HMR, concurrent mode support, optimized ESM bundles. |
-| **State Management** | Redux Toolkit + Context API | Hybrid strategy: Redux for global auth/session state; Context API for isolated feature boards. |
-| **Styling Engine** | Tailwind CSS v4 | CSS Custom Property `@theme` integration, modern native color-mix variables. |
-| **Form Management** | React Hook Form | High-performance, uncontroller-optimized multi-approach array state. |
-| **Code Studio** | `@monaco-editor/react` | Industry-standard IDE experience in browser with multi-language AST highlighting. |
-| **Icons & Assets** | `@remixicon/react` | Clean, crisp neo-grotesque vector iconography. |
-| **Identity & Fonts** | Google Fonts | `Syne` (Brutalist display), `Space Grotesk` (Interface), `JetBrains Mono` (Code). |
+| Ink | `#111116` | Every border, every hard shadow |
+| Acid Lime | `#CCFF00` | Primary actions, "final form" states |
+| Hot Pink | `#FF2A85` | Alerts, villain-era tags, emotional spikes |
+| Cyber Cyan | `#00E5FF` | Topic tags, links |
+| Display type | `Syne` | Headlines that need to shout |
+| Body type | `Space Grotesk` | Everything you actually read |
+| Code type | `JetBrains Mono` | Editors, complexity tags, terminal logs |
+
+No soft glassmorphism. No blurred shadows. No pastel gradients. Every drop shadow is a hard, flat offset — because stickers don't have ambient occlusion.
 
 ---
 
-## 🔮 Future Scalability & Product Roadmap
+## 📸 Pin the evidence
 
-ArcWeb is architected from the ground up to evolve from an individual developer utility into an ecosystem-scale developer platform:
+*Screenshots go here — drag them into `/docs/screenshots/` and swap the paths below. Caption each one like a Polaroid, not a figure label.*
 
-### 1. Personalized DSA Social Media & Feed
-- **Algorithmic Feed:** An interactive feed where developers publish their solution evolutionary arcs ("From $O(N^3)$ to $O(N \log N)$ in 30 minutes").
-- **Forkable Approaches:** Allow users to fork another developer's note, attach their own benchmark, or annotate edge cases directly in Monaco Editor.
-- **Micro-Discussions:** Code-block level inline annotations and comment threads.
+<div align="center">
 
-### 2. Global & Cohort Ranking System
-- **Arc Score:** A multidimensional rating metric factoring in consistency, approach optimization depth (penalizing brute-force only, rewarding multi-approach documentation), and peer upvotes.
-- **Guild / University Leaderboards:** Cohort-based leaderboards encouraging collaborative interview preparation.
+| | |
+|---|---|
+| ![Vision Board](./screenshots/vision.png) <br> `"the corkboard, not the spreadsheet"` | ![Arc Modal](./screenshots/arc_modal.png) <br> `"three approaches, zero deleted history"` |
+| ![Sticky Wall](./screenshots/sticky.png) <br> `"the wall that remembers two-pointers for you"` | ![Your Wrapped](./screenshots/wrapped.png) <br> `"villain era, now shareable"` |
 
-### 3. Direct LeetCode & GitHub OAuth Sync
-- **Automated Ingestion:** Direct sync with LeetCode GraphQL APIs to ingest solved problems, run times, and memory percentiles automatically into the Vision Board.
-- **GitHub Backup Action:** Automatic bi-directional export of Arc logs into a personal GitHub repository as polished Markdown files.
-
-### 4. "Arc Live": Interactive Developer Lounges (LinkedIn Live / Twitch for DSA)
-- **Live Algorithm Breakdowns:** Dedicated real-time collaborative rooms where senior data scientists, competitive programmers, and engineers stream live system design or hard DSA deep-dives.
-- **Dual-Pane Collaborative Studio:** Viewers follow the presenter's live code in Monaco Editor while maintaining their own local sticky notes and personal takeaway cards.
-
-### 5. Automated "Wrapped Up" Engine
-- **End-of-Month & Annual Dossiers:** Moving from the current teaser to a fully automated canvas generator rendering shareable story cards:
-  - *Total Villain Eras Conquered*
-  - *Hardest Problem Broken Down*
-  - *Most Used Language & Favorite Data Structure*
-  - *Peak Grinding Hours & Consistency Heatmaps*
+</div>
 
 ---
 
-## 💻 Local Development Setup
+## 🔓 What unlocks next *(a roadmap with an XP bar, not a wishlist)*
 
-### Prerequisites
-- Node.js `>= 18.0.0`
-- npm `>= 9.0.0`
+ARC's next chapters aren't a fixed date — they're gated behind the only metric that's ever mattered here: **people actually using it.** Here's what unlocks at each tier.
 
-### Installation & Launch
+```
+[■■■■■■■■■■] TIER 0 — SHIPPED
+  ✓ Vision Board, Arc Modal, Sticky Wall, Your Wrapped, Glow-Up Carousel
+
+[■■■□□□□□□□] TIER 1 — UNLOCKS AT REAL USERS
+  → LeetCode + GitHub OAuth sync — auto-ingest solved problems, runtimes,
+    and memory percentiles straight into the Vision Board
+  → Automatic GitHub backup — every arc exported as clean Markdown to
+    your own repo, no copy-pasting
+
+[□□□□□□□□□□] TIER 2 — UNLOCKS AT A REAL COMMUNITY
+  → Forkable arcs — fork someone else's approach, attach your own
+    benchmark, annotate their edge cases inline in Monaco
+  → Arc Score — a rating that rewards documenting multiple approaches,
+    not just brute-forcing your way to a green checkmark
+  → Guild / university leaderboards — cohort-based prep, not solo grind
+
+[□□□□□□□□□□] TIER 3 — UNLOCKS AT SCALE
+  → Arc Live — real-time collaborative rooms for live DSA/system-design
+    breakdowns, dual-pane Monaco so you code alongside the presenter
+  → Fully automated "Wrapped Up" — monthly + annual dossiers generated
+    with zero manual assembly: villain eras conquered, hardest problem
+    broken down, peak grinding hours, the whole heatmap
+```
+
+No tier ships before the one before it earns its keep. That's the whole roadmap philosophy — same as the product itself: **prove the approach works before you call it optimized.**
+
+---
+
+## 💻 Run it locally
+
 ```bash
-# 1. Clone the repository
+# clone it
 git clone https://github.com/your-username/arc-dsa-glowup.git
-
-# 2. Navigate to the project directory
 cd arc-dsa-glowup/Arc
 
-# 3. Install dependencies
+# install
 npm install
 
-# 4. Start the local development server
+# run it
 npm run dev
+# → http://localhost:5173
 
-# 5. Open in browser
-# Default: http://localhost:5173 or http://localhost:5174
-```
-
-### Production Build
-```bash
-# Build optimized production bundle
+# ship it
 npm run build
-
-# Preview production build locally
 npm run preview
 ```
 
+**Requires:** Node `>= 18.0.0`, npm `>= 9.0.0`
+
 ---
 
-## 👨‍💻 Developer & Craft Reflection
+## 🛠️ Complexity analysis *(the actual tech stack)*
 
-ArcWeb demonstrates an uncompromising pursuit of product-grade frontend engineering:
-- **Design Systems Over Templates:** Every border, token, and drop shadow was hand-crafted to create a unified design system.
-- **Complex Form State Mastery:** Managing dynamic nested field arrays with embedded code editors demonstrates senior-level state handling.
-- **User-Centric Architecture:** Transforming a tedious chore (interview prep) into an expressive, empowering developer ritual.
+| Layer | Tech | Why |
+|---|---|---|
+| Core | React 19 + Vite 7 | Fast HMR, concurrent-ready, no bloat |
+| State | Redux Toolkit + Context | Redux for auth/session, Context for isolated boards |
+| Styling | Tailwind CSS v4 | Native `@theme` tokens, no config sprawl |
+| Forms | React Hook Form | `useFieldArray` powers the whole multi-approach engine |
+| Code editor | `@monaco-editor/react` | Real IDE, not a `<textarea>` cosplaying as one |
+| Icons | `@remixicon/react` | Clean neo-grotesque vector set |
+| Fonts | Google Fonts | Syne / Space Grotesk / JetBrains Mono |
+
+---
+
+## 🧑‍💻 The Architect
+
+<div align="left">
+
+
+**Find the human behind the villain-era commits:**
+
+- GitHub — [@rajshahdev966](https://github.com/rajshahdev966)
+- LinkedIn — [Raj Shah](https://www.linkedin.com/in/rajshah-dev/)
+
+
+</div>
+
+---
+
+<div align="center">
+
+> — RAJ SHAH'S ARC COMMITTEE 
+
+**⭐ Star this if your own arc started in villain era too.**
+
+</div>
