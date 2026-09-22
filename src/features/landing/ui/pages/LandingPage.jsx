@@ -188,22 +188,22 @@ class Solution:
           {/* ========================================================================= */}
           <div className="w-full mt-14 relative max-w-5xl">
             {/* Top Washi Tape Sticker */}
-            <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20 bg-[#D4FF00] text-[#111116] border-2 border-on-surface px-6 py-1 font-mono text-xs font-black uppercase tracking-wider shadow-[3px_3px_0px_#111116] -rotate-1">
+            <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20 bg-[#D4FF00] text-[#111116] border-2 border-on-surface px-3 sm:px-6 py-1 font-mono text-[9px] sm:text-xs font-black uppercase tracking-wider shadow-[3px_3px_0px_#111116] -rotate-1 max-w-[92vw] truncate">
               // LIVE ARC SNAPSHOT: LEETCODE #42 // TRAPPING RAIN WATER //
             </div>
 
             {/* Container Box with Heavy Brutalist Frame */}
-            <div className="w-full bg-surface-container-lowest border-2 sm:border-3 border-on-surface shadow-[8px_8px_0px_#111116] pt-8 pb-6 px-4 sm:px-6 relative overflow-hidden">
+            <div className="w-full bg-surface-container-lowest border-2 sm:border-3 border-on-surface shadow-[4px_4px_0px_#111116] sm:shadow-[8px_8px_0px_#111116] pt-8 pb-6 px-3 sm:px-6 relative overflow-hidden">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
                 {/* Left Side: Interactive Code Terminal (7 cols) */}
-                <div className="lg:col-span-7 flex flex-col bg-[#0f0f13] border-2 border-on-surface shadow-[4px_4px_0px_#111116] text-left overflow-hidden">
+                <div className="lg:col-span-7 flex flex-col bg-[#0f0f13] border-2 border-on-surface shadow-[3px_3px_0px_#111116] sm:shadow-[4px_4px_0px_#111116] text-left overflow-hidden">
                   {/* Terminal Header */}
-                  <div className="bg-[#18181f] border-b-2 border-on-surface px-3 py-2 flex items-center justify-between">
+                  <div className="bg-[#18181f] border-b-2 border-on-surface px-2.5 sm:px-3 py-2 flex flex-wrap sm:flex-nowrap items-center justify-between gap-2">
                     <TricolourDisplayButtons />
-                    <div className="flex items-center gap-1.5">
+                    <div className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar">
                       <button
                         onClick={() => setHeroEra("villain-era")}
-                        className={`px-2 py-0.5 text-[10px] font-mono font-bold uppercase transition-all ${
+                        className={`px-1.5 sm:px-2 py-0.5 text-[9px] sm:text-[10px] font-mono font-bold uppercase transition-all shrink-0 ${
                           heroEra === "villain-era"
                             ? "bg-red-500 text-white shadow-sm font-black"
                             : "bg-[#25252e] text-zinc-400 hover:text-white"
@@ -213,7 +213,7 @@ class Solution:
                       </button>
                       <button
                         onClick={() => setHeroEra("mid-arc")}
-                        className={`px-2 py-0.5 text-[10px] font-mono font-bold uppercase transition-all ${
+                        className={`px-1.5 sm:px-2 py-0.5 text-[9px] sm:text-[10px] font-mono font-bold uppercase transition-all shrink-0 ${
                           heroEra === "mid-arc"
                             ? "bg-[#ff007f] text-white shadow-sm font-black"
                             : "bg-[#25252e] text-zinc-400 hover:text-white"
@@ -223,7 +223,7 @@ class Solution:
                       </button>
                       <button
                         onClick={() => setHeroEra("final-form")}
-                        className={`px-2 py-0.5 text-[10px] font-mono font-bold uppercase transition-all ${
+                        className={`px-1.5 sm:px-2 py-0.5 text-[9px] sm:text-[10px] font-mono font-bold uppercase transition-all shrink-0 ${
                           heroEra === "final-form"
                             ? "bg-[#D4FF00] text-[#111116] shadow-sm font-black"
                             : "bg-[#25252e] text-zinc-400 hover:text-white"

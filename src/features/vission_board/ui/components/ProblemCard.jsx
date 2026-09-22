@@ -11,7 +11,7 @@ const ProblemCard = ({ problem}) => {
   return (
     <article
       onClick={() => handleOpenArc(problem)}
-      className={`group relative bg-surface-container-lowest border-2 border-on-surface shadow-[5px_5px_0px_#111116] transition-all duration-200 hover:-translate-y-1 hover:shadow-[8px_8px_0px_#111116] ${problem.cardTilt} p-space-md lg:p-space-lg pt-space-lg cursor-pointer`}
+      className={`group relative bg-surface-container-lowest border-2 border-on-surface shadow-[4px_4px_0px_#111116] sm:shadow-[5px_5px_0px_#111116] transition-all duration-200 hover:-translate-y-1 hover:shadow-[7px_7px_0px_#111116] sm:${problem.cardTilt} p-space-md lg:p-space-lg pt-space-lg cursor-pointer`}
     >
       <div
         className={`absolute -top-3 left-1/2 -translate-x-1/2 w-32 h-6 border border-on-surface/30 shadow-[1px_1px_2px_rgba(0,0,0,0.15)] flex items-center justify-center pointer-events-none ${tapeObj.style}`}

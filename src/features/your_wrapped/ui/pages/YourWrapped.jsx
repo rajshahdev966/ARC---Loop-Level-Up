@@ -145,7 +145,7 @@ const YourWrapped = ({
             {/* ============================================================ */}
             {/* 1. TOP HERO: WRAPPED DROPPING SOON (EXACT SCREENSHOT REPLICA)*/}
             {/* ============================================================ */}
-            <div className="relative border border-[#1d1f27] bg-[#0c0d12] shadow-[12px_12px_0px_#000] p-5 sm:p-8 md:p-10 overflow-hidden">
+            <div className="relative border border-[#1d1f27] bg-[#0c0d12] shadow-[6px_6px_0px_#000] sm:shadow-[12px_12px_0px_#000] p-4 sm:p-8 md:p-10 overflow-hidden">
               {/* TOP-RIGHT CORNER INDUSTRIAL HAZARD STRIPES TAPE */}
               <div className="absolute top-9 -right-14 rotate-45 w-52 h-9 border-2 border-black flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.8)] z-30 pointer-events-none select-none [background:repeating-linear-gradient(45deg,#ccff00,#ccff00_12px,#111116_12px,#111116_24px)]">
                 <span className="px-2 py-0.5 bg-black/85 text-[#ccff00] font-mono font-black text-[9px] tracking-widest uppercase border border-black">
@@ -162,7 +162,7 @@ const YourWrapped = ({
 
               {/* MASSIVE 3D EXTENDED GEN-Z TITLE */}
               <div className="mb-5 select-none">
-                <h1 className="font-['Syne',sans-serif] font-black uppercase tracking-tighter leading-[0.88] text-5xl sm:text-7xl md:text-8xl">
+                <h1 className="font-['Syne',sans-serif] font-black uppercase tracking-tighter leading-[0.88] text-4xl sm:text-7xl md:text-8xl">
                   {/* WRAPPED */}
                   <span className="block text-white [text-shadow:4px_4px_0px_#e30071,6px_6px_0px_#000]">
                     WRAPPED

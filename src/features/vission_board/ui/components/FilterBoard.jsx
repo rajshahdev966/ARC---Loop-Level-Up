@@ -46,9 +46,9 @@ const FilterBoard = () => {
         </div>
 
         {/* THE SCRAPBOARD PANEL (BEHIND THE BUTTON) */}
-        <div className="relative z-10 flex-1 w-full bg-surface-container-low border-[3px] border-on-surface shadow-[6px_6px_0px_#111116] p-space-md lg:p-space-lg md:pl-16 mt-5">
+        <div className="relative z-10 flex-1 w-full bg-surface-container-low border-[3px] border-on-surface shadow-[4px_4px_0px_#111116] sm:shadow-[6px_6px_0px_#111116] p-space-sm sm:p-space-md lg:p-space-lg md:pl-16 mt-4 sm:mt-5">
           {/* Lime-green washi tape peeking in from top edge */}
-          <div className="absolute -top-3.5 left-10 md:left-20 w-32 h-6 bg-[#CCFF00]/95 dark:bg-primary-container/95 border border-on-surface/40 -rotate-2 shadow-sm pointer-events-none flex items-center justify-center">
+          <div className="absolute -top-3.5 left-6 sm:left-10 md:left-20 w-28 sm:w-32 h-6 bg-[#CCFF00]/95 dark:bg-primary-container/95 border border-on-surface/40 -rotate-2 shadow-sm pointer-events-none flex items-center justify-center">
             <span className="font-label-sm text-[8px] uppercase tracking-widest font-black text-[#161e00] dark:text-on-primary-fixed text-nowrap ">
               ★ SCRAPBOARD HUB ★
             </span>
@@ -56,7 +56,7 @@ const FilterBoard = () => {
 
           <div className="absolute -top-3 right-16 w-24 h-5 bg-secondary-fixed/85 border border-on-surface/40 rotate-3 shadow-sm pointer-events-none hidden sm:block" />
 
-          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-space-md pt-1 pl-6">
+          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-space-md pt-1 pl-0 md:pl-6">
             {/* Left: Heading & Search Input */}
             <div className="w-full lg:w-1/2 flex flex-col gap-space-xs">
               <div className="flex items-center gap-space-xs flex-wrap">
@@ -64,8 +64,8 @@ const FilterBoard = () => {
                   The Scrapboard
                 </h2>
 
-                <span className="px-space-xs py-0.5 bg-surface-container-highest border border-on-surface font-label-sm text-[10px] uppercase font-bold text-on-surface -rotate-1 shadow-[1px_1px_0px_#111116]">
-                  {allProblems?.length} Problems Cataloged
+                <span className="px-space-xs py-0.5 bg-surface-container-highest border border-on-surface font-mono text-[10px] uppercase font-bold text-on-surface -rotate-1 shadow-[1px_1px_0px_#111116]">
+                  [{allProblems?.length} LOGS]
                 </span>
               </div>
 
@@ -76,8 +76,8 @@ const FilterBoard = () => {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search by problem name, runtime, or vibe..."
-                  className="w-full pl-9 pr-space-md py-2 bg-surface-container-lowest border-2 border-on-surface font-code-md text-code-md text-on-surface placeholder:text-on-surface-variant/60 shadow-[3px_3px_0px_#111116] focus:outline-none focus:shadow-[5px_5px_0px_#111116] transition-all"
+                  placeholder=">_ Search problem, runtime, or vibe..."
+                  className="w-full pl-9 pr-space-md py-2 bg-surface-container-lowest border-2 border-on-surface font-code-md text-xs sm:text-code-md text-on-surface placeholder:text-on-surface-variant/60 shadow-[3px_3px_0px_#111116] focus:outline-none focus:shadow-[5px_5px_0px_#111116] transition-all"
                 />
 
                 {searchQuery ? (
@@ -99,7 +99,7 @@ const FilterBoard = () => {
             {/* Right: Status Filters & Topic Badges */}
             <div className="w-full lg:w-1/2 flex flex-col gap-space-sm items-start lg:items-end">
               {/* Arc Status Filter Buttons */}
-              <div className="flex flex-wrap gap-space-xs items-center">
+              <div className="flex flex-wrap gap-1.5 sm:gap-space-xs items-center w-full lg:w-auto">
                 {statusFilters.map((filter) => {
                   const isActive = activeStatus === filter.id;
                   return (
@@ -107,7 +107,7 @@ const FilterBoard = () => {
                       key={filter.id}
                       type="button"
                       onClick={() => setActiveStatus(filter.id)}
-                      className={`px-space-sm py-1 border-2 border-on-surface font-label-md text-label-md uppercase font-bold shadow-[3px_3px_0px_#111116] active:translate-x-[2px] active:translate-y-[2px] transition-transform cursor-pointer ${
+                      className={`px-2 sm:px-space-sm py-1 border-2 border-on-surface font-mono text-[10px] sm:text-label-md uppercase font-bold shadow-[2px_2px_0px_#111116] sm:shadow-[3px_3px_0px_#111116] active:translate-x-[1px] active:translate-y-[1px] transition-transform cursor-pointer ${
                         isActive
                           ? `${filter.activeStyle} -translate-y-0.5`
                           : "bg-surface-container-lowest hover:bg-surface-container text-on-surface"
@@ -120,28 +120,30 @@ const FilterBoard = () => {
               </div>
 
               {/* Topic Filter Chips */}
-              <div className="flex flex-wrap gap-1.5 items-center max-w-170">
-                <span className="font-label-sm text-[10px] uppercase font-bold text-on-surface-variant mr-1">
+              <div className="flex flex-wrap gap-1.5 items-center w-full lg:w-auto max-w-full">
+                <span className="font-mono text-[9px] sm:text-[10px] uppercase font-bold text-on-surface-variant mr-1 shrink-0">
                   TOPICS:
                 </span>
 
-                {availableTags.map((topic) => {
-                  const isSelected = activeTopic === topic;
-                  return (
-                    <button
-                      key={topic}
-                      type="button"
-                      onClick={() => setActiveTopic(isSelected ? "" : topic)}
-                      className={`px-2 py-0.5 border border-on-surface font-code-md text-label-sm shadow-[2px_2px_0px_#111116] transition-transform hover:scale-105 cursor-pointer ${
-                        isSelected
-                          ? "bg-primary-container text-on-primary-fixed font-bold"
-                          : `bg-surface-container-lowest ${topic.hoverBg} text-on-surface`
-                      }`}
-                    >
-                      {topic}
-                    </button>
-                  );
-                })}
+                <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 w-full sm:w-auto flex-wrap sm:flex-nowrap lg:flex-wrap">
+                  {availableTags.map((topic) => {
+                    const isSelected = activeTopic === topic;
+                    return (
+                      <button
+                        key={topic}
+                        type="button"
+                        onClick={() => setActiveTopic(isSelected ? "" : topic)}
+                        className={`px-2 py-0.5 border border-on-surface font-mono text-[10px] sm:text-label-sm shadow-[1.5px_1.5px_0px_#111116] sm:shadow-[2px_2px_0px_#111116] transition-transform hover:scale-105 cursor-pointer shrink-0 ${
+                          isSelected
+                            ? "bg-primary-container text-on-primary-fixed font-bold"
+                            : `bg-surface-container-lowest ${topic.hoverBg} text-on-surface`
+                        }`}
+                      >
+                        {topic}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>
